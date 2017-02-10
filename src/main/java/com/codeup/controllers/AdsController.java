@@ -48,4 +48,17 @@ public class AdsController {
         viewModel.addAttribute("ad", ad);
         return "ads/create";
     }
+
+    @GetMapping("/ads/{id}/edit")
+    public String showEditAdForm(@PathVariable int id, Model viewModel) {
+        viewModel.addAttribute("ad", service.findOneAd(id));
+        return "ads/edit";
+    }
+
+    @PostMapping("/ads/{id}/edit")
+    public String updateAd(@ModelAttribute Ad ad, Model viewModel) {
+        service.update(ad);
+        viewModel.addAttribute("ad", ad);
+        return "ads/edit";
+    }
 }

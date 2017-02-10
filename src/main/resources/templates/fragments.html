@@ -37,6 +37,17 @@
     </div><!-- /.container-fluid -->
 </nav>
 
+<section th:fragment="form(action, ad, label)">
+<form th:attr="action=${action}" method="POST" th:object="${ad}">
+    <label>Title</label>
+    <input type="text" name="title" th:field="*{title}" />
+    <label>Description</label>
+    <input type="text" name="description" th:field="*{description}" />
+
+    <input type="submit" th:attr="value=${label}" />
+</form>
+</section>
+
 <span th:fragment="scripts">
     <script
         src="https://code.jquery.com/jquery-3.1.1.min.js"

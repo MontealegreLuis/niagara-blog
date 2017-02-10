@@ -4,14 +4,11 @@
 <body>
     <nav th:replace="fragments :: navbar"/>
     <div class="container">
-        <form action="/ads/create" method="POST" th:object="${ad}">
-            <label>Title</label>
-            <input type="text" name="title" th:field="*{title}" />
-            <label>Description</label>
-            <input type="text" name="description" th:field="*{description}" />
-
-            <input type="submit" value="Save ad" />
-        </form>
+        <section th:replace="fragments :: form(
+            action='/ads/create',
+            ad=${ad},
+            label='Save ad'
+        )"/>
     </div>
     <span th:replace="fragments :: scripts"/>
 </body>

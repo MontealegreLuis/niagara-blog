@@ -5,7 +5,7 @@ package com.codeup.models;
 
 // bean
 public class Ad {
-    private long id;
+    private int id;
     private String title;
     private String description;
 
@@ -35,5 +35,9 @@ public class Ad {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 }

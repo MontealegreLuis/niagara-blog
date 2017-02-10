@@ -35,4 +35,8 @@ public class AdService {
     public Ad findOneAd(int id) {
         return ads.get(id - 1);
     }
+
+    public void update(Ad ad) {
+        ads.set(ad.getId() - 1, ad);
+    }
 }
