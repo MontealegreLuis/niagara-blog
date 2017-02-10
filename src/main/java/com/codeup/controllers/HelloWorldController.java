@@ -8,6 +8,17 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class HelloWorldController {
+
+    @GetMapping("/home")
+    public String homePage() {
+        return "home";  // home.html
+    }
+
+    @GetMapping("/contact")
+    public String contactPage() {
+        return "contact/form"; // contact/form.html
+    }
+
     @GetMapping("/hello/{name}")
     @ResponseBody
     public String hello(@PathVariable String name) {

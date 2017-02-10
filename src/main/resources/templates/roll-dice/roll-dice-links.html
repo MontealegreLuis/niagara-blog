@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Choose a number</title>
+</head>
+<body>
+    <h1>Choose a number</h1>
+    <ul>
+        <li th:each="number : ${numbers}">
+            <a th:text="${number}" th:href="@{'/roll-dice/' + ${number}}"/>
+        </li>
+    </ul>
+</body>
+</html>
