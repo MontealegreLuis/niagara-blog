@@ -57,7 +57,7 @@ public class AdsController {
     public String saveAd(@ModelAttribute Ad ad, Model viewModel) {
         service.save(ad);
         viewModel.addAttribute("ad", ad);
-        return "ads/create";
+        return "redirect:/ads";
     }
 
     @GetMapping("/ads/{id}/edit")
@@ -70,6 +70,6 @@ public class AdsController {
     public String updateAd(@ModelAttribute Ad ad, Model viewModel) {
         service.update(ad);
         viewModel.addAttribute("ad", ad);
-        return "ads/edit";
+        return "redirect:/ads";
     }
 }
