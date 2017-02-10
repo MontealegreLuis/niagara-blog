@@ -17,6 +17,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AdsController {
     private AdService service;
 
+    // how do i build the AdsController?
+    // resolution
+    // -> I need to build the ads service
+    //    -> I need to build the ads repository
+
+    // execution
+    // repo = new AdsRepository();
+    // service = new AdService(repo)
+    // controller = new AdsController(service);
+
+
     @Autowired
     public AdsController(AdService service) {
         this.service = service;

@@ -3,10 +3,34 @@
  */
 package com.codeup.models;
 
-// bean
+import javax.persistence.*;
+
+// Hibernate
+
+// select * from ads where id = 1   -> ResultSet
+// .next
+// new Ad()  -> returning
+
+// generic
+// Ad ad = new Ad();   //calls the default constructor
+// only using the setters
+// ad.setInt(rs.nextInt();
+// ad.setTitle(rs.getString());
+// ad.setDescription(rs.getString());
+// return ad;
+
+
+@Entity
+@Table(name="ads")
 public class Ad {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(nullable = false)
     private String title;
+
+    @Column(length = 2000, nullable = false)
     private String description;
 
     public Ad(String title, String description) {

@@ -4,6 +4,8 @@
 package com.codeup.services;
 
 import com.codeup.models.Ad;
+import com.codeup.repositories.AdsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,32 +13,27 @@ import java.util.List;
 
 @Service
 public class AdService {
-    private List<Ad> ads = new ArrayList<>();
+    private AdsRepository repository;
 
-    public AdService() {
-        createAds();
-    }
-
-    private void createAds() {
-        for (int i = 0; i < 100; i++) {
-            save(new Ad("Title " + (i + 1), "Description " + (i + 1)));
-        }
+    @Autowired
+    public AdService(AdsRepository repository) {
+        this.repository = repository;
     }
 
     public void save(Ad ad) {
-        ad.setId(ads.size() + 1);
-        ads.add(ad);
+        repository.save(ad); // insert into ads (title, description) values (?, ?)
     }
 
     public List<Ad> all() {
-        return ads;
+        // Iterable -> List  (casting it)
+        return (List<Ad>) repository.findAll(); // select * from ads
     }
 
     public Ad findOneAd(int id) {
-        return ads.get(id - 1);
+        return repository.findOne(id); // select * from ads where id = ?
     }
 
     public void update(Ad ad) {
-        ads.set(ad.getId() - 1, ad);
+        repository.save(ad); // update
     }
 }
