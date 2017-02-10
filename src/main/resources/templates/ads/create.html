@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8" />
-    <title>Create an Ad</title>
-</head>
+<head th:replace="fragments :: head(title='Create an ad')"/>
 <body>
-    <form action="/ads/create" method="POST" th:object="${ad}">
-        <label>Title</label>
-        <input type="text" name="title" th:field="*{title}" />
-        <label>Description</label>
-        <input type="text" name="description" th:field="*{description}" />
+    <nav th:replace="fragments :: navbar"/>
+    <div class="container">
+        <form action="/ads/create" method="POST" th:object="${ad}">
+            <label>Title</label>
+            <input type="text" name="title" th:field="*{title}" />
+            <label>Description</label>
+            <input type="text" name="description" th:field="*{description}" />
 
-        <input type="submit" value="Save ad" />
-    </form>
+            <input type="submit" value="Save ad" />
+        </form>
+    </div>
+    <span th:replace="fragments :: scripts"/>
 </body>
 </html>

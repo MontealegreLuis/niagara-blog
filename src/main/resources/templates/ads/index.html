@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8" />
-    <title>List of ads</title>
-</head>
+<head th:replace="fragments :: head(title='View a single ad')"/>
 <body>
-    <h1>All ads</h1>
-    <div th:each="ad: ${ads}">
-        <h2 th:text="${ad.title}" />
-        <p th:text="${ad.description}"/>
+    <nav th:replace="fragments :: navbar"/>
+    <div class="container">
+        <h1>All ads</h1>
+        <div th:each="ad: ${ads}">
+            <h2 th:text="${ad.title}" />
+            <p th:text="${ad.description}"/>
+        </div>
     </div>
+    <span th:replace="fragments :: scripts"/>
 </body>
 </html>
