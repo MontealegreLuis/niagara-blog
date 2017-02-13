@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+>
 <head th:fragment="head(title)">
     <meta charset="UTF-8" />
     <title th:text="${title}"/>
@@ -28,11 +31,19 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="active">
-                    <a href="/ads">Ads <span class="sr-only">(current)</span></a>
+                    <a href="/ads">Ads <span class="sr1-only">(current)</span></a>
+                </li>
+                <li>
+                    <a sec:authorize="isAuthenticated()" href="/ads/create">Create an Ad!</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/logout">Logout</a></li>
+                <li>
+                    <a sec:authorize="isAuthenticated()" href="/logout">Logout</a>
+                </li>
+                <li>
+                    <a sec:authorize="!isAuthenticated()" href="/login">Login</a>
+                </li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -50,6 +61,7 @@
     </div>
 
     <input class="btn btn-primary" type="submit" th:attr="value=${label}" />
+    <input type="hidden"  th:attr="name=${_csrf.parameterName}"  value="${_csrf.token}"/>
 </form>
 </section>
 

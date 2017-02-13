@@ -7,6 +7,7 @@ import com.codeup.models.Ad;
 import com.codeup.models.User;
 import com.codeup.services.AdService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,14 +57,8 @@ public class AdsController {
 
     @PostMapping("/ads/create")
     public String saveAd(@ModelAttribute Ad ad, Model viewModel) {
-        // get this from the session
-        User user = new User();
-        user.setId(2);
-        ad.setUser(user);
+        ad.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         service.save(ad);
-        //repository.save(ad);
-        //postsDao.save(ad);
-        //posts.save(ad);
 
         viewModel.addAttribute("ad", ad);
         return "redirect:/ads";

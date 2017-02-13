@@ -1,16 +1,33 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+>
 <head th:replace="fragments :: head(title='View all ads')"/>
 <body>
     <nav th:replace="fragments :: navbar"/>
     <div class="container">
         <h1>All ads</h1>
-        <a class="btn btn-success" href="/ads/create">Create an ad!</a>
+        <a
+            sec:authorize="isAuthenticated()"
+            class="btn btn-success"
+            href="/ads/create"
+        >
+            Create an ad!
+        </a>
         <div th:each="ad: ${ads}">
             <h2 th:text="${ad.title}" />
             <p th:text="${ad.description}"/>
-            <a class="btn btn-default" th:href="${'/ads/' + ad.id}">Show</a>
-            <a class="btn btn-primary" th:href="${'/ads/' + ad.id + '/edit'}">Edit</a>
+            <a class="btn btn-default" th:href="${'/ads/' + ad.id}">
+                Show
+            </a>
+            <a
+                sec:authorize="isAuthenticated()"
+                class="btn btn-primary"
+                th:href="${'/ads/' + ad.id + '/edit'}"
+            >
+                Edit
+            </a>
         </div>
     </div>
     <span th:replace="fragments :: scripts"/>
