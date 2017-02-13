@@ -4,6 +4,7 @@
 package com.codeup.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 // Hibernate
 
@@ -33,12 +34,26 @@ public class Ad {
     @Column(length = 2000, nullable = false)
     private String description;
 
+    // will define your foreign key
+    // i will use a convention  `the_other_table_name_id`
+    @ManyToOne
+    @JoinColumn (name = "user_id")  // define at the table level
+    private User user;  // owner, author
+
     public Ad(String title, String description) {
         this.title = title;
         this.description = description;
     }
 
     public Ad() {
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getTitle() {

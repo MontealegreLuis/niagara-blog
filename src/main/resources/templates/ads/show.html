@@ -6,6 +6,12 @@
     <div class="container">
         <h1 th:text="${ad.title}" />
         <p th:text="${ad.description}" />
+        <p class="lead">
+            Posted by
+            <a th:href="${'/users/' + ad.user.id}" th:text="${ad.user.username}"/>,
+            Contact at
+            <a th:href="${'mailto:' + ad.user.email}" th:text="${ad.user.email}"/>
+        </p>
     </div>
     <span th:replace="fragments :: scripts"/>
 </body>

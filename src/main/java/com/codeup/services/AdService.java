@@ -21,7 +21,7 @@ public class AdService {
     }
 
     public void save(Ad ad) {
-        repository.save(ad); // insert into ads (title, description) values (?, ?)
+        repository.save(ad); // insert into ads (title, description, user_id) values (?, ?, ?)
     }
 
     public List<Ad> all() {
