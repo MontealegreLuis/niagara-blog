@@ -38,11 +38,14 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a sec:authorize="isAuthenticated()" href="/logout">Logout</a>
+                <li sec:authorize="isAuthenticated()">
+                    <form action="/logout" method="post">
+                        <input class="btn btn-link" value="Logout" type="submit"/>
+                        <input type="hidden"  th:attr="name=${_csrf.parameterName},value=${_csrf.token}"/>
+                    </form>
                 </li>
-                <li>
-                    <a sec:authorize="!isAuthenticated()" href="/login">Login</a>
+                <li sec:authorize="!isAuthenticated()">
+                    <a href="/login">Login</a>
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->
