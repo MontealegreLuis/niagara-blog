@@ -3,6 +3,8 @@
  */
 package com.codeup.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -24,6 +26,7 @@ public class User {
     @Column(nullable = false)
     @NotBlank(message = "Your password cannot be empty")
     @Size(min = 8, message = "Your password should have at least 8 characters")
+    @JsonIgnore
     private String password;
 
     @Column(nullable = false)
@@ -32,6 +35,7 @@ public class User {
     private String email;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") // defined at the object level
+    @JsonBackReference
     private List<Ad> ads;  // these are all the ads created by this user
 
     // pattern

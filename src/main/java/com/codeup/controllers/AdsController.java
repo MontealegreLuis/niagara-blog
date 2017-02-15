@@ -11,12 +11,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 public class AdsController {
@@ -40,9 +39,14 @@ public class AdsController {
 
     @GetMapping("/ads")
     public String showAllAds(Model viewModel) {
-        viewModel.addAttribute("ads", service.all());
+        viewModel.addAttribute("ads", Collections.emptyList());
 
         return "ads/index";
+    }
+
+    @GetMapping("/ads.json")
+    public @ResponseBody List<Ad> retrieveAllAds() {
+        return service.all();
     }
 
     @GetMapping("/ads/{id}")

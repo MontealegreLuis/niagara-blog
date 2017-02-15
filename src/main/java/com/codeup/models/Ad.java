@@ -3,6 +3,7 @@
  */
 package com.codeup.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -44,6 +45,7 @@ public class Ad {
     // i will use a convention  `the_other_table_name_id`
     @ManyToOne
     @JoinColumn (name = "user_id")  // define at the table level
+    @JsonManagedReference
     private User user;  // owner, author
 
     public Ad(String title, String description) {
