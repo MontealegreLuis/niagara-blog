@@ -9,8 +9,8 @@
         for (i = 0; i < ads.length; i++) {
             html += '<div><h2>'
                 + ads[i].title + '</h2><p>'
-                + ads[i].description +  '</p>' +
-                '<img src="/uploads/' + ads[i].image + '" alt="No image"/>'
+                + ads[i].description +  '</p>'
+                + '<img src="/uploads/' + ads[i].image + '" alt="No image"/>'
                 + '</div>';
         }
 
