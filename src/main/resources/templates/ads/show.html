@@ -6,6 +6,7 @@
     <div class="container">
         <h1 th:text="${ad.title}" />
         <p th:text="${ad.description}" />
+        <img th:attr="src=${'/uploads/' + ad.image}" />
         <p class="lead">
             Posted by
             <a th:href="${'/users/' + ad.user.id}" th:text="${ad.user.username}"/>,

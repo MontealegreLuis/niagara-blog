@@ -41,6 +41,9 @@ public class Ad {
     @Size(min = 5, message = "Description must have at least 5 characters")
     private String description;
 
+    @Column
+    private String image;
+
     // will define your foreign key
     // i will use a convention  `the_other_table_name_id`
     @ManyToOne
@@ -54,6 +57,14 @@ public class Ad {
     }
 
     public Ad() {
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public User getUser() {
