@@ -3,7 +3,10 @@
  */
 package com.codeup.models;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 // Hibernate
@@ -29,9 +32,12 @@ public class Ad {
     private int id;
 
     @Column(nullable = false)
+    @NotBlank(message = "Title cannot be empty")
     private String title;
 
     @Column(length = 2000, nullable = false)
+    @NotBlank(message = "Descriptions cannot be empty")
+    @Size(min = 5, message = "Description must have at least 5 characters")
     private String description;
 
     // will define your foreign key

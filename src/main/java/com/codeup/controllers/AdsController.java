@@ -10,10 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 
 @Controller
 public class AdsController {
@@ -56,11 +59,21 @@ public class AdsController {
     }
 
     @PostMapping("/ads/create")
-    public String saveAd(@ModelAttribute Ad ad, Model viewModel) {
-        ad.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    public String saveAd(
+        @Valid Ad ad, // it calls @ModelAttribute first
+        Errors validation,
+        Model viewModel
+    ) {
+        if (validation.hasErrors()) {
+            viewModel.addAttribute("errors", validation);
+            viewModel.addAttribute("ad", ad);
+            return "ads/create";
+        }
+
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ad.setUser(user);
         service.save(ad);
 
-        viewModel.addAttribute("ad", ad);
         return "redirect:/ads";
     }
 

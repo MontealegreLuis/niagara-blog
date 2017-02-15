@@ -3,7 +3,11 @@
  */
 package com.codeup.models;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -14,12 +18,17 @@ public class User {
     private int id;
 
     @Column(nullable = false)
+    @NotBlank(message = "Enter a username")
     private String username;
 
     @Column(nullable = false)
+    @NotBlank(message = "Your password cannot be empty")
+    @Size(min = 8, message = "Your password should have at least 8 characters")
     private String password;
 
     @Column(nullable = false)
+    @Email(message = "Enter a valid email address")
+    @NotBlank(message = "Enter an email")
     private String email;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") // defined at the object level
