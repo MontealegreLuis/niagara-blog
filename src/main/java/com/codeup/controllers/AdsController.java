@@ -8,6 +8,7 @@ import com.codeup.models.User;
 import com.codeup.services.AdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,7 +36,6 @@ public class AdsController {
     // repo = new AdsRepository();
     // service = new AdService(repo)
     // controller = new AdsController(service);
-
 
     @Autowired
     public AdsController(AdService service) {
@@ -76,21 +76,17 @@ public class AdsController {
         Errors validation,
         Model viewModel,
         @RequestParam(name = "image_file") MultipartFile uploadedFile
-    ) {
+    ) throws IOException {
         if (validation.hasErrors()) {
             viewModel.addAttribute("errors", validation);
             viewModel.addAttribute("ad", ad);
             return "ads/create";
         }
-        // unix based : mac, linux -> the folder for temporary files is always /tmp -> kljsah12312
+        // unix based : mac, linux -> the folder for temporary files is always
+        // /tmp -> kljsah12312 (temporary random name)
         String filename = uploadedFile.getOriginalFilename();
-        String filepath = Paths.get(uploadsPath, filename).toString();
-        File destinationFile = new File(filepath);
-        try {
-            uploadedFile.transferTo(destinationFile); // it will move the file in this step
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String destinationPath = Paths.get(uploadsPath, filename).toString();
+        uploadedFile.transferTo(new File(destinationPath)); // it will move the file in this step
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ad.setUser(user);
@@ -101,12 +97,14 @@ public class AdsController {
     }
 
     @GetMapping("/ads/{id}/edit")
+    @PreAuthorize("@adOwnerExpression.isOwner(principal, #id)")
     public String showEditAdForm(@PathVariable int id, Model viewModel) {
         viewModel.addAttribute("ad", service.findOneAd(id));
         return "ads/edit";
     }
 
     @PostMapping("/ads/{id}/edit")
+    @PreAuthorize("@adOwnerExpression.isOwner(principal, #ad.id)")
     public String updateAd(@ModelAttribute Ad ad, Model viewModel) {
         service.update(ad);
         viewModel.addAttribute("ad", ad);
