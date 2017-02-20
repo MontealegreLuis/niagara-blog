@@ -25,6 +25,9 @@ import java.util.List;
 
 @Controller
 public class AdsController {
+    @Value("${uploads}")
+    private String uploadsPath;
+
     private AdService service;
 
     // how do i build the AdsController?
@@ -66,9 +69,6 @@ public class AdsController {
         viewModel.addAttribute("ad", ad);
         return "ads/create";
     }
-
-    @Value("${uploads}")
-    private String uploadsPath;
 
     @PostMapping("/ads/create")
     public String saveAd(
