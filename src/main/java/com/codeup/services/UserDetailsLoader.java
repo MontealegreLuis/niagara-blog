@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service("customUserDetailsService")
+@Service
 public class UserDetailsLoader implements UserDetailsService {
     private final UsersRepository users;
     private final RolesRepository roles;
