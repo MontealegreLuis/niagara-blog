@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("postService")
+@Service
 public class PostService {
     private List<Post> posts = new ArrayList<>();
 

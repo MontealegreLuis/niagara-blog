@@ -121,7 +121,6 @@ public class AdsController {
         return String.format("%s/%s", new File(".").getCanonicalPath(), uploadsPath);
     }
 
-
     @GetMapping("/ads/{id}/edit")
     @PreAuthorize("@adOwnerExpression.isOwner(principal, #id)")
     public String showEditAdForm(@PathVariable int id, Model viewModel) {
