@@ -10,20 +10,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-
 @Controller
 public class PostsController {
     private PostService service;
 
-    @Autowired // Constructor injection
+    @Autowired
     public PostsController(PostService service) {  // local variable
         this.service = service;
     }
 
     @GetMapping("/posts")
     public String viewAllPosts(Model viewModel){
-        List<Post> posts = service.findAllPosts();
+        Iterable<Post> posts = service.findAllPosts();
         viewModel.addAttribute("posts", posts);
 
         return "posts/index";
