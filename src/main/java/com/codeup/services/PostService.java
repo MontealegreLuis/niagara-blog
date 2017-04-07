@@ -8,24 +8,25 @@ import com.codeup.repositories.PostsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class PostService {
 
-    private PostsRepository posts;
+    private PostsRepository repository;
 
     @Autowired
-    public PostService(PostsRepository posts) {
-        this.posts = posts;
+    public PostService(PostsRepository repository) {
+        this.repository = repository;
     }
 
     public Post findOnePost(long id) {
-        return posts.findOne(id);
+        return repository.findOne(id);
     }
 
     public Iterable<Post> findAllPosts() {
-        return posts.findAll();
+        return repository.findAll();
+    }
+
+    public void save(Post post) {
+        repository.save(post);
     }
 }
