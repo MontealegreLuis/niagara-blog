@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8" />
-    <title>List of posts</title>
-</head>
+<head th:replace="fragments :: head(title='View all posts')"/>
 <body>
-    <h1>All posts</h1>
-    <div th:each="post: ${posts}">
-        <h2 th:text="${post.title}" />
-        <p th:text="${post.body}"/>
-    </div>
+    <nav th:replace="fragments :: navbar"/>
+    <main class="container">
+        <header class="page-header"><h1>All posts</h1></header>
+        <section class="col-md-6" th:each="post: ${posts}">
+            <article class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="lead" th:text="${post.title}" />
+                </div>
+                <div class="panel-body">
+                    <p th:text="${post.body}"/>
+                </div>
+            </article>
+        </section>
+    </main>
+    <span th:replace="fragments :: scripts"/>
 </body>
 </html>

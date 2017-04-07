@@ -31,17 +31,16 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="active">
-                    <a href="/ads">Ads <span class="sr1-only">(current)</span></a>
+                    <a href="/posts">Posts <span class="sr1-only">(current)</span></a>
                 </li>
                 <li>
-                    <a sec:authorize="isAuthenticated()" href="/ads/create">Create an Ad!</a>
+                    <a sec:authorize="isAuthenticated()" href="/posts/create">Publish a Post!</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li sec:authorize="isAuthenticated()">
-                    <form action="/logout" method="post">
+                    <form th:action="@{/logout}" method="post">
                         <input class="btn btn-link" value="Logout" type="submit"/>
-                        <input type="hidden"  th:attr="name=${_csrf.parameterName},value=${_csrf.token}"/>
                     </form>
                 </li>
                 <li sec:authorize="!isAuthenticated()">
