@@ -24,6 +24,9 @@ public class Post {
     @Size(min = 5, message = "Posts must have at least 5 characters")
     private String body;
 
+    public Post() {
+    }
+
     private Post(String title, String body) {
         setTitle(title);
         setBody(body);

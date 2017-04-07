@@ -36,9 +36,9 @@ public class PostsController {
     }
 
     @GetMapping("/posts/create")
-    @ResponseBody
-    public String viewCreatePostForm() {
-        return "posts/show";
+    public String viewCreatePostForm(Model viewModel) {
+        viewModel.addAttribute("post", new Post());
+        return "posts/create";
     }
 
     @PostMapping("/posts/create")
