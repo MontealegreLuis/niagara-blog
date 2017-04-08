@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments :: head(title='View all posts')"/>
+<head th:replace="fragments/common :: head(title='View all posts')"/>
 <body>
-    <nav th:replace="fragments :: navbar"/>
+    <nav th:replace="fragments/common :: navbar"/>
     <main class="container">
         <header class="page-header"><h1>All posts</h1></header>
         <section class="col-md-6" th:each="post: ${posts}">
@@ -24,6 +24,6 @@
             </article>
         </section>
     </main>
-    <span th:replace="fragments :: scripts"/>
+    <span th:replace="fragments/common :: scripts"/>
 </body>
 </html>

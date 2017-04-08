@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments :: head(title='View post details')"/>
+<head th:replace="fragments/common :: head(title='View post details')"/>
 <body>
-<nav th:replace="fragments :: navbar"/>
+<nav th:replace="fragments/common :: navbar"/>
 <main class="container">
     <h1 th:text="${post.title}" />
     <p th:text="${post.body}" />
 </main>
-<span th:replace="fragments :: scripts"/>
+<span th:replace="fragments/common :: scripts"/>
 </body>
 </html>
