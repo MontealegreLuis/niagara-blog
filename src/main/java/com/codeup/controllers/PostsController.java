@@ -59,4 +59,17 @@ public class PostsController {
 
         return "redirect:/posts";
     }
+
+    @GetMapping("/posts/{id}/edit")
+    public String showEditPostForm(@PathVariable Long id, Model viewModel) {
+        viewModel.addAttribute("post", service.findOnePost(id));
+        return "posts/edit";
+    }
+
+    @PostMapping("/posts/{id}/edit")
+    public String updatePost(@Valid Post post, Model viewModel) {
+        service.update(post);
+        viewModel.addAttribute("post", post);
+        return "redirect:/posts";
+    }
 }

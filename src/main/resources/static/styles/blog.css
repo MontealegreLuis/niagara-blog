@@ -1,3 +1,7 @@
 .logout {
     margin-top: .7em;
 }
+
+.panel-footer form {
+    display: inline;
+}

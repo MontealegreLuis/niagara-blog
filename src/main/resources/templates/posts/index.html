@@ -13,6 +13,14 @@
                 <div class="panel-body">
                     <p th:text="${post.body}"/>
                 </div>
+                <div class="panel-footer">
+                    <a th:href="${'/posts/' + post.id + '/edit' }" class="btn btn-primary">
+                        Edit
+                    </a>
+                    <form th:action="${'/posts/' + post.id}" method="post">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
             </article>
         </section>
     </main>
