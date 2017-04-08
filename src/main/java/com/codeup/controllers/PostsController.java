@@ -1,8 +1,11 @@
 package com.codeup.controllers;
 
 import com.codeup.models.Post;
+import com.codeup.models.User;
 import com.codeup.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -23,8 +26,7 @@ public class PostsController {
 
     @GetMapping("/posts")
     public String viewAllPosts(Model viewModel){
-        Iterable<Post> posts = service.findAllPosts();
-        viewModel.addAttribute("posts", posts);
+        viewModel.addAttribute("posts", service.findAllPosts());
 
         return "posts/index";
     }
@@ -52,29 +54,33 @@ public class PostsController {
         if (validation.hasErrors()) {
             viewModel.addAttribute("errors", validation);
             viewModel.addAttribute("post", post);
-            return "ads/create";
+            return "posts/create";
         }
 
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        post.setAuthor(user);
         service.save(post);
 
         return "redirect:/posts";
     }
 
     @GetMapping("/posts/{id}/edit")
+    @PreAuthorize("@postOwnerExpression.isAuthor(principal, #id)")
     public String showEditPostForm(@PathVariable Long id, Model viewModel) {
         viewModel.addAttribute("post", service.findOnePost(id));
         return "posts/edit";
     }
 
     @PostMapping("/posts/{id}/edit")
+    @PreAuthorize("@postOwnerExpression.isAuthor(principal, #post.id)")
     public String updatePost(@Valid Post post, Model viewModel) {
         service.update(post);
         viewModel.addAttribute("post", post);
         return "redirect:/posts";
     }
 
-
     @PostMapping("/posts/{id}/delete")
+    @PreAuthorize("@postOwnerExpression.isAuthor(principal, #id)")
     public String deletePost(@PathVariable Long id) {
         service.deletePostWith(id);
         return "redirect:/posts";

@@ -6,7 +6,7 @@
 <main class="container">
     <header class="page-header"><h1>Edit your post</h1></header>
     <section th:replace="fragments/posts :: form(
-        action='/posts/update',
+        action='/posts/' + ${post.id} + '/edit',
         post=${post},
         label='Update'
     )"/>

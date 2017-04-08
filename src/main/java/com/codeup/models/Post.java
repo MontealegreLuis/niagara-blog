@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 @Entity
+@Table(name="posts")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +24,10 @@ public class Post {
     @NotBlank(message = "Posts cannot be empty")
     @Size(min = 5, message = "Posts must have at least 5 characters")
     private String body;
+
+    @ManyToOne
+    @JoinColumn (name = "user_id")  // define at the table level
+    private User author;
 
     public Post() {
     }
@@ -60,5 +65,13 @@ public class Post {
     public void setBody(String body) {
         Assert.notNull(body, "Posts cannot be empty");
         this.body = body;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
     }
 }
