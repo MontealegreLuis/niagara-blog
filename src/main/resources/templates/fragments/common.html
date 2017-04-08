@@ -51,6 +51,12 @@
                 </li>
                 <li
                     sec:authorize="!isAuthenticated()"
+                    th:class="${#httpServletRequest.requestURI == '/register' ? 'active' : ''}"
+                >
+                    <a href="/register">Register</a>
+                </li>
+                <li
+                    sec:authorize="!isAuthenticated()"
                     th:class="${#httpServletRequest.requestURI == '/login' ? 'active' : ''}"
                 >
                     <a href="/login">Login</a>
