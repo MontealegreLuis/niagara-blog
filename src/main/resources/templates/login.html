@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments :: head(title='Login')"/>
+<head th:replace="fragments/common :: head(title='Login')"/>
 <body>
-    <nav th:replace="fragments :: navbar"/>
+    <nav th:replace="fragments/common :: navbar"/>
     <div class="container">
         <h1>Log In</h1>
         <div th:if="${param.error}">
@@ -24,6 +24,6 @@
             <input class="btn btn-primary" type="submit" value="Log In" />
         </form>
     </div>
-    <span th:replace="fragments :: scripts"/>
+    <span th:replace="fragments/common :: scripts"/>
 </body>
 </html>

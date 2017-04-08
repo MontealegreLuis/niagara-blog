@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments :: head(title='Login')"/>
+<head th:replace="fragments/common :: head(title='Login')"/>
 <body>
-    <nav th:replace="fragments :: navbar"/>
-    <div class="container">
-        <form action="/users/create" method="post" th:object="${user}">
+    <nav th:replace="fragments/common :: navbar"/>
+    <main class="container">
+        <form th:action="@{/users/create}" method="post" th:object="${user}">
         <div class="form-group">
             <label for="username">Username</label>
             <input
-                type="text"
+                id="username"
                 class="form-control"
                 th:field="*{username}"
             />
@@ -17,7 +17,7 @@
         <div class="form-group">
             <label for="email">Email</label>
             <input
-                type="text"
+                id="email"
                 class="form-control"
                 th:field="*{email}"
             />
@@ -36,6 +36,7 @@
             <label for="password">Password</label>
             <input
                 type="password"
+                id="password"
                 class="form-control"
                 th:field="*{password}"
             />
@@ -52,9 +53,8 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Register</button>
-        <input type="hidden" th:attr="name=${_csrf.parameterName},value=${_csrf.token}"/>
         </form>
-    </div>
-    <span th:replace="fragments :: scripts"/>
+    </main>
+    <span th:replace="fragments/common :: scripts"/>
 </body>
 </html>
