@@ -122,14 +122,12 @@ public class AdsController {
     }
 
     @GetMapping("/ads/{id}/edit")
-    @PreAuthorize("@adOwnerExpression.isOwner(principal, #id)")
     public String showEditAdForm(@PathVariable int id, Model viewModel) {
         viewModel.addAttribute("ad", service.findOneAd(id));
         return "ads/edit";
     }
 
     @PostMapping("/ads/{id}/edit")
-    @PreAuthorize("@adOwnerExpression.isOwner(principal, #ad.id)")
     public String updateAd(@ModelAttribute Ad ad, Model viewModel) {
         service.update(ad);
         viewModel.addAttribute("ad", ad);
