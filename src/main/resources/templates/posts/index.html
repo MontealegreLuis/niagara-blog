@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+>
 <head th:replace="fragments/common :: head(title='View all posts')"/>
 <body>
     <nav th:replace="fragments/common :: navbar"/>
@@ -13,7 +16,7 @@
                 <div class="panel-body">
                     <p th:text="${post.body}"/>
                 </div>
-                <div class="panel-footer">
+                <div class="panel-footer" sec:authorize="isAuthenticated()">
                     <a th:href="${'/posts/' + post.id + '/edit' }" class="btn btn-primary">
                         Edit
                     </a>
