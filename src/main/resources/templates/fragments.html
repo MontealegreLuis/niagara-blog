@@ -31,11 +31,14 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active">
-                    <a href="/posts">Posts <span class="sr1-only">(current)</span></a>
+                <li th:class="${#httpServletRequest.requestURI == '/posts' ? 'active' : ''}">
+                    <a href="/posts">Posts</a>
                 </li>
-                <li>
-                    <a sec:authorize="isAuthenticated()" href="/posts/create">Publish a Post!</a>
+                <li
+                    sec:authorize="isAuthenticated()"
+                    th:class="${#httpServletRequest.requestURI == '/posts/create' ? 'active' : ''}"
+                >
+                    <a href="/posts/create">Publish a Post!</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -44,7 +47,10 @@
                         <input class="btn btn-link logout" value="Logout" type="submit"/>
                     </form>
                 </li>
-                <li sec:authorize="!isAuthenticated()">
+                <li
+                    sec:authorize="!isAuthenticated()"
+                    th:class="${#httpServletRequest.requestURI == '/login' ? 'active' : ''}"
+                >
                     <a href="/login">Login</a>
                 </li>
             </ul>
