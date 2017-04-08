@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>View a single post</title>
-</head>
+<head th:replace="fragments :: head(title='View post details')"/>
 <body>
+<nav th:replace="fragments :: navbar"/>
+<main class="container">
     <h1 th:text="${post.title}" />
     <p th:text="${post.body}" />
+</main>
+<span th:replace="fragments :: scripts"/>
 </body>
 </html>
