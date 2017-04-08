@@ -72,4 +72,11 @@ public class PostsController {
         viewModel.addAttribute("post", post);
         return "redirect:/posts";
     }
+
+
+    @PostMapping("/posts/{id}/delete")
+    public String deletePost(@PathVariable Long id) {
+        service.deletePostWith(id);
+        return "redirect:/posts";
+    }
 }
