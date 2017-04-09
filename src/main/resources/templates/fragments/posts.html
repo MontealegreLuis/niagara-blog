@@ -6,7 +6,7 @@
 </head>
 <body>
 <section th:fragment="form(action, post, label)">
-    <form th:action="${action}" method="POST" th:object="${post}">
+    <form th:action="${action}" method="POST" th:object="${post}"  enctype="multipart/form-data">
         <div class="form-group">
             <label for="title">Title</label>
             <input id="title" class="form-control" th:field="*{title}" />
@@ -24,6 +24,10 @@
                 type='danger',
                 messages = ${#fields.errors('__body__')}
             )" />
+        </div>
+        <div class="form-group">
+            <label for="image">Upload an image!</label>
+            <input id="image" name="image_file" type="file" />
         </div>
         <input class="btn btn-primary" type="submit" th:attr="value=${label}" />
     </form>

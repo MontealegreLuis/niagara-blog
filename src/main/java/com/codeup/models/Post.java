@@ -25,6 +25,9 @@ public class Post {
     @Size(min = 5, message = "Posts must have at least 5 characters")
     private String body;
 
+    @Column
+    private String image;
+
     @ManyToOne
     @JoinColumn (name = "user_id")  // define at the table level
     private User author;
@@ -73,5 +76,13 @@ public class Post {
 
     public void setAuthor(User author) {
         this.author = author;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

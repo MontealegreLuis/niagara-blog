@@ -30,7 +30,7 @@ import java.util.List;
 
 @Controller
 public class AdsController {
-    @Value("${uploads}")
+    @Value("${uploads.folder}")
     private String uploadsPath;
 
     private AdService service;

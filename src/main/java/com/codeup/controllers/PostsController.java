@@ -4,6 +4,7 @@ import com.codeup.models.Post;
 import com.codeup.models.User;
 import com.codeup.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -12,11 +13,20 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
 
 @Controller
 public class PostsController {
+
+    @Value("${uploads.folder}")
+    private String uploadsFolder;
+
     private PostService service;
 
     @Autowired
@@ -49,13 +59,19 @@ public class PostsController {
     public String createPost(
         @Valid Post post,
         Errors validation,
-        Model viewModel
-    ) {
+        Model viewModel,
+        @RequestParam(name = "image_file") MultipartFile uploadedFile
+    ) throws IOException {
         if (validation.hasErrors()) {
             viewModel.addAttribute("errors", validation);
             viewModel.addAttribute("post", post);
             return "posts/create";
         }
+
+        String filename = uploadedFile.getOriginalFilename();
+        String destinationPath = Paths.get(uploadsFolder(), filename).toString();
+        uploadedFile.transferTo(new File(destinationPath));
+        post.setImage(filename);
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setAuthor(user);
@@ -84,5 +100,9 @@ public class PostsController {
     public String deletePost(@PathVariable Long id) {
         service.deletePostWith(id);
         return "redirect:/posts";
+    }
+
+    private String uploadsFolder() throws IOException {
+        return String.format("%s/%s", new File(".").getCanonicalPath(), uploadsFolder);
     }
 }
