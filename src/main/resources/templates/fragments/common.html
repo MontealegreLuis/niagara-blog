@@ -67,7 +67,7 @@
 </nav>
 <!-- Error Messages -->
 <div
-    th:fragment="error(condition, type, message)"
+    th:fragment="error(condition, type, messages)"
     th:if="${condition}"
     th:class="${'alert alert-' + type + ' alert-dismissible'}"
     role="alert"
@@ -75,7 +75,10 @@
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
-    <strong th:text="${message}" />
+    <ul>
+        <li th:each="message : ${messages}"
+            th:text="${message}" />
+    </ul>
 </div>
 <!-- Javascript files -->
 <span th:fragment="scripts">

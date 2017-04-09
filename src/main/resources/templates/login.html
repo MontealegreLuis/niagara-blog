@@ -8,12 +8,12 @@
         <div th:replace="fragments/common :: error(
             condition=${param.error},
             type='danger',
-            message = 'Invalid Username and Password'
+            messages = ${new String[]{'Invalid Username and Password'}}
         )" />
         <div th:replace="fragments/common :: error(
             condition=${param.logout},
             type='info',
-            message = 'You have been logged out'
+            messages = ${new String[]{'You have been logged out'}}
         )" />
         <form th:action="@{/login}" method="post">
             <div class="form-group">
