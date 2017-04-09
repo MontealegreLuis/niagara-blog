@@ -10,12 +10,20 @@
         <div class="form-group">
             <label for="title">Title</label>
             <input id="title" class="form-control" th:field="*{title}" />
-            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" />
+            <div th:replace="fragments/common :: error(
+                condition=${#fields.hasErrors('title')},
+                type='danger',
+                messages = ${#fields.errors('__title__')}
+            )" />
         </div>
         <div class="form-group">
             <label for="body">Body</label>
             <input id="body" class="form-control" th:field="*{body}" />
-            <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}" />
+            <div th:replace="fragments/common :: error(
+                condition=${#fields.hasErrors('body')},
+                type='danger',
+                messages = ${#fields.errors('__body__')}
+            )" />
         </div>
         <input class="btn btn-primary" type="submit" th:attr="value=${label}" />
     </form>
