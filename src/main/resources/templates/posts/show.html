@@ -5,6 +5,11 @@
 <nav th:replace="fragments/common :: navbar"/>
 <main class="container">
     <h1 th:text="${post.title}" />
+    <img
+        th:if="${post.image}"
+        th:src="${'/uploads/' + post.image}"
+        class="img-responsive"
+    />
     <p th:text="${post.body}" />
 </main>
 <span th:replace="fragments/common :: scripts"/>

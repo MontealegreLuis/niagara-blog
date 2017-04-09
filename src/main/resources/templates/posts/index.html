@@ -16,11 +16,22 @@
                 <div class="panel-body">
                     <p th:text="${post.body}"/>
                 </div>
-                <div class="panel-footer" sec:authorize="isAuthenticated()">
-                    <a th:href="${'/posts/' + post.id + '/edit' }" class="btn btn-primary">
+                <div class="panel-footer">
+                    <a th:href="${'/posts/' + post.id }" class="btn btn-success">
+                        Read
+                    </a>
+                    <a
+                        class="btn btn-primary"
+                        th:href="${'/posts/' + post.id + '/edit' }"
+                        sec:authorize="isAuthenticated()"
+                    >
                         Edit
                     </a>
-                    <form th:action="${'/posts/' + post.id + '/delete'}" method="post">
+                    <form
+                        method="post"
+                        th:action="${'/posts/' + post.id + '/delete'}"
+                        sec:authorize="isAuthenticated()"
+                    >
                         <button class="btn btn-danger">Delete</button>
                     </form>
                 </div>
