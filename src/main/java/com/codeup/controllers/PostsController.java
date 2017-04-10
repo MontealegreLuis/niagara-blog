@@ -39,7 +39,7 @@ public class PostsController {
         this.service = service;
     }
 
-    @GetMapping("/posts")
+    @GetMapping({"/", "/posts"})
     public String viewAllPosts(Model viewModel){
         viewModel.addAttribute("posts", service.findAllPosts());
 
