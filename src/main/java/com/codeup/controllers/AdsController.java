@@ -101,22 +101,6 @@ public class AdsController {
         return "redirect:/ads";
     }
 
-    @GetMapping("/ads/image/{filename:.+}")
-    public HttpEntity<byte[]> showAdImage(@PathVariable String filename) throws IOException {
-        String imagePath = String.format(
-            "%s/%s",
-            uploadsFolder(),
-            filename
-        );
-        byte[] image = IOUtils.toByteArray(FileUtils.openInputStream(new File(imagePath)));
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_JPEG);
-        headers.setContentLength(image.length);
-
-        return new HttpEntity<>(image, headers);
-    }
-
     private String uploadsFolder() throws IOException {
         return String.format("%s/%s", new File(".").getCanonicalPath(), uploadsPath);
     }

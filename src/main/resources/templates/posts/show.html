@@ -7,7 +7,7 @@
     <h1 th:text="${post.title}" />
     <img
         th:if="${post.image}"
-        th:src="${'/uploads/' + post.image}"
+        th:src="${'/posts/image/' + post.image}"
         class="img-responsive"
     />
     <p th:text="${post.body}" />

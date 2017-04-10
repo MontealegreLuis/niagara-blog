@@ -3,8 +3,13 @@ package com.codeup.controllers;
 import com.codeup.models.Post;
 import com.codeup.models.User;
 import com.codeup.services.PostService;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -100,6 +105,22 @@ public class PostsController {
     public String deletePost(@PathVariable Long id) {
         service.deletePostWith(id);
         return "redirect:/posts";
+    }
+
+    @GetMapping("/posts/image/{filename:.+}")
+    public HttpEntity<byte[]> showPostsImage(@PathVariable String filename) throws IOException {
+        String imagePath = String.format(
+            "%s/%s",
+            uploadsFolder(),
+            filename
+        );
+        byte[] image = IOUtils.toByteArray(FileUtils.openInputStream(new File(imagePath)));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+        headers.setContentLength(image.length);
+
+        return new HttpEntity<>(image, headers);
     }
 
     private String uploadsFolder() throws IOException {
