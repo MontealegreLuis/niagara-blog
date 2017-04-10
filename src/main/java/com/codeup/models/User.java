@@ -3,14 +3,12 @@
  */
 package com.codeup.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -34,29 +32,14 @@ public class User {
     @NotBlank(message = "Enter an email")
     private String email;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") // defined at the object level
-    @JsonBackReference
-    private List<Ad> ads;  // these are all the ads created by this user
-
-    // pattern
-    // copy constructor -> an alternative to clone
     public User(User user) {
         id = user.id;
         username = user.username;
         password = user.password;
         email = user.email;
-        ads = user.ads;
     }
 
     public User() {
-    }
-
-    public List<Ad> getAds() {
-        return ads;
-    }
-
-    public void setAds(List<Ad> ads) {
-        this.ads = ads;
     }
 
     public int getId() {
