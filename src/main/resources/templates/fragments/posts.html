@@ -18,7 +18,7 @@
         </div>
         <div class="form-group">
             <label for="body">Body</label>
-            <input id="body" class="form-control" th:field="*{body}" />
+            <textarea id="body" class="form-control" th:field="*{body}" />
             <div th:replace="fragments/common :: error(
                 condition=${#fields.hasErrors('body')},
                 type='danger',
