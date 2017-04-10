@@ -29,7 +29,7 @@ public class AuthenticationController {
 
     @GetMapping("/login")
     public String showLoginForm() {
-        return "login";
+        return "users/login";
     }
 
     @GetMapping("/register")
@@ -40,7 +40,7 @@ public class AuthenticationController {
 
     @PostMapping("/users/create")
     public String registerUser(
-        @Valid User user, // create the user from the input values, and apply validations
+        @Valid User user,
         Errors validation,
         Model viewModel,
         @RequestParam(name = "password_confirm") String passwordConfirmation
@@ -57,9 +57,10 @@ public class AuthenticationController {
             viewModel.addAttribute("user", user);
             return "users/register";
         }
-        String hashedPassword = encoder.encode(user.getPassword()); // hash the user's password
-        user.setPassword(hashedPassword);
-        repository.save(user); // save the user to the database
-        return "redirect:/login"; // redirect the user to the login page
+
+        user.setPassword(encoder.encode(user.getPassword()));
+        repository.save(user);
+
+        return "redirect:/login";
     }
 }
