@@ -9,7 +9,7 @@
     <form th:action="${action}" method="POST" th:object="${post}"  enctype="multipart/form-data">
         <div class="form-group">
             <label for="title">Title</label>
-            <input id="title" class="form-control" th:field="*{title}" />
+            <input id="title" class="form-control" autofocus="autofocus" th:field="*{title}" />
             <div th:replace="fragments/common :: error(
                 condition=${#fields.hasErrors('title')},
                 type='danger',
