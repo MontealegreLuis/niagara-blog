@@ -16,6 +16,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Arrays;
+
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -32,6 +34,24 @@ public class PostsControllerTest {
 
     @MockBean
     private PostService service;
+
+    @Test
+    public void it_shows_all_the_published_posts() throws Exception {
+        given(service.findAllPosts())
+            .willReturn(Arrays.asList(
+                Post.publish("Intro to Spring Boot", "Intro text for Spring Boot"),
+                Post.publish("Intro to JUnit", "Intro text for JUnit"),
+                Post.publish("Intro to Mockito", "Intro text for Mockito")
+            ))
+        ;
+
+        mvc.perform(get("/posts"))
+            .andExpect(status().isOk())
+            .andExpect(content().string(Matchers.containsString("Intro to Spring Boot")))
+            .andExpect(content().string(Matchers.containsString("Intro to JUnit")))
+            .andExpect(content().string(Matchers.containsString("Intro to Mockito")))
+        ;
+    }
 
     @Test
     public void it_finds_an_existing_vehicle() throws Exception {
