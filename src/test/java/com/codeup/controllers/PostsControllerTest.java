@@ -47,4 +47,15 @@ public class PostsControllerTest {
             .andExpect(content().string(Matchers.containsString(body)))
         ;
     }
+
+    @Test
+    public void it_returns_a_404_status_code_if_the_post_cannot_be_found() throws Exception {
+        long id = -1;
+        given(service.findOnePost(id)).willReturn(null);
+
+        mvc.perform(get("/posts/" + id))
+            .andExpect(status().isNotFound())
+        ;
+    }
+
 }

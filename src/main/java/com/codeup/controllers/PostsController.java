@@ -1,5 +1,6 @@
 package com.codeup.controllers;
 
+import com.codeup.exceptions.PostNotFound;
 import com.codeup.models.Post;
 import com.codeup.models.User;
 import com.codeup.services.PostService;
@@ -49,6 +50,11 @@ public class PostsController {
     @GetMapping("/posts/{id}")
     public String viewSinglePost(@PathVariable long id, Model viewModel) {
         Post post = service.findOnePost(id);
+
+        if (post == null) {
+            throw new PostNotFound(String.format("Post with ID %d cannot be found", id));
+        }
+
         viewModel.addAttribute("post", post);
 
         return "posts/show";
