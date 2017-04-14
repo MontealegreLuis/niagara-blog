@@ -4,36 +4,48 @@
 package com.codeup.controllers;
 
 import com.codeup.models.Post;
+import com.codeup.models.User;
 import com.codeup.services.PostService;
 import org.hamcrest.Matchers;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Arrays;
 
 import static org.mockito.BDDMockito.given;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMockMvc
 @AutoConfigureTestDatabase
 public class PostsControllerTest {
+    private MockMvc mvc;
 
     @Autowired
-    private MockMvc mvc;
+    private WebApplicationContext context;
 
     @MockBean
     private PostService service;
+
+    @Before
+    public void configure() {
+        mvc = MockMvcBuilders
+            .webAppContextSetup(context)
+            .apply(springSecurity())
+            .build()
+        ;
+    }
 
     @Test
     public void it_shows_all_the_published_posts() throws Exception {
@@ -78,4 +90,12 @@ public class PostsControllerTest {
         ;
     }
 
+    @Test
+    public void it_redirects_anonymous_user_to_login_page_when_trying_to_edit_a_post() throws Exception {
+        int anyId = -1;
+        mvc.perform(get("/posts/" + anyId + "/edit"))
+            .andExpect(status().is(302))
+            .andExpect(redirectedUrlPattern("**/login"))
+        ;
+    }
 }
