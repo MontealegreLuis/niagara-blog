@@ -1,5 +1,8 @@
 # Spring Boot Demo Blog
 
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](LICENSE)
+[![codebeat badge](https://codebeat.co/badges/cb353c07-f5f0-4862-a7f1-419008e1c40b)](https://codebeat.co/projects/github-com-montealegreluis-spring-blog-master)
+
 This is a small demo of a blog using Spring Boot.
 
 # Configuration
