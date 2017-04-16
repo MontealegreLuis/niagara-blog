@@ -6,6 +6,7 @@ jdk:
 install: true
 
 before_script:
+  - $ cp src/main/resources/application.dist.properties src/main/resources/application.properties
   - travis_wait 45 ./mvnw install -q -U -DskipTests=true -Pfast -Dmaven.test.redirectTestOutputToFile=true
 
 script:
