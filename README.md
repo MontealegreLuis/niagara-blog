@@ -8,7 +8,7 @@ This is a small demo of a blog using Spring Boot.
 
 # Configuration
 
-To run this application you'll need a MYSQL database user.
+To run this application you'll need a MySQL database user.
 You can create a user with the following command.
 
 ```sql
@@ -26,6 +26,8 @@ $ cp src/main/resources/application.dist.properties src/main/resources/applicati
 ```
 
 Update your database credentials in this file, *if needed*.
+
+**NOTE.** This application uses [Redis][redis] for caching.
 
 # Usage
 
@@ -47,3 +49,4 @@ java -jar target/blog-0.0.1-SNAPSHOT.jar
 [travis]: https://travis-ci.org/MontealegreLuis/spring-blog
 [codebeat-badge]: https://codebeat.co/badges/cb353c07-f5f0-4862-a7f1-419008e1c40b
 [codebeat]: https://codebeat.co/projects/github-com-montealegreluis-spring-blog-master
+[redis]: https://redis.io/topics/quickstart
