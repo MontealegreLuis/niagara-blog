@@ -9,12 +9,11 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
-@Entity
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Entity @Table(name = "users")
+public class User implements Serializable {
+    @Id @GeneratedValue
     private int id;
 
     @Column(nullable = false)

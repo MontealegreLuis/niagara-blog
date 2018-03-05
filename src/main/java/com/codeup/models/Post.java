@@ -8,12 +8,11 @@ import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
-@Entity
-@Table(name="posts")
-public class Post {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Entity @Table(name="posts")
+public class Post implements Serializable {
+    @Id @GeneratedValue
     private long id;
 
     @Column(nullable = false)
