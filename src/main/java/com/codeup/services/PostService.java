@@ -8,11 +8,11 @@ import com.codeup.repositories.PostsRepository;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PostService {
-
     private PostsRepository repository;
 
     public PostService(PostsRepository repository) {
@@ -24,22 +24,27 @@ public class PostService {
         return repository.findOne(id);
     }
 
-    @Cacheable("all-posts")
+    @Cacheable(value = "all-posts")
     public Iterable<Post> findAllPosts() {
         return repository.findAll();
     }
 
+    @CacheEvict(value = "all-posts", allEntries = true)
     @Cacheable(value = "single-post", key = "#post.id")
     public void save(Post post) {
         repository.save(post);
     }
 
+    @CacheEvict(value = "all-posts", allEntries = true)
     @CachePut(value = "single-post", key = "#post.id")
     public void update(Post post) {
         repository.save(post);
     }
 
-    @CacheEvict(value = "single-port", key = "#id")
+    @Caching(evict = {
+        @CacheEvict(value = "single-post", key = "#id"),
+        @CacheEvict(value = "all-posts", allEntries = true)
+    })
     public void deletePostWith(Long id) {
         repository.delete(id);
     }
