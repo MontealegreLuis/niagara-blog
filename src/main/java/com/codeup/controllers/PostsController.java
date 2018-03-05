@@ -79,10 +79,12 @@ public class PostsController {
             return "posts/create";
         }
 
-        String filename = uploadedFile.getOriginalFilename();
-        String destinationPath = Paths.get(uploadsFolder(), filename).toString();
-        uploadedFile.transferTo(new File(destinationPath));
-        post.setImage(filename);
+        if (!uploadedFile.isEmpty()) {
+            String filename = uploadedFile.getOriginalFilename();
+            String destinationPath = Paths.get(uploadsFolder(), filename).toString();
+            uploadedFile.transferTo(new File(destinationPath));
+            post.setImage(filename);
+        }
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setAuthor(user);
