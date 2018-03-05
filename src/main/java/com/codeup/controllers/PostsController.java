@@ -103,6 +103,8 @@ public class PostsController {
     @PostMapping("/posts/{id}/edit")
     @PreAuthorize("@postOwnerExpression.isAuthor(principal, #post.id)")
     public String updatePost(@Valid Post post, Model viewModel) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        post.setAuthor(user);
         service.update(post);
         viewModel.addAttribute("post", post);
         return "redirect:/posts";
