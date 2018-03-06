@@ -15,6 +15,14 @@ public class PostInformation {
     @NotBlank(message = "Posts cannot be empty")
     private String body;
 
+    public PostInformation() {
+    }
+
+    public PostInformation(String title, String body) {
+        this.title = title;
+        this.body = body;
+    }
+
     public String getTitle() {
         return title;
     }

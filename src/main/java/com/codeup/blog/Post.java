@@ -44,10 +44,6 @@ public class Post implements Serializable {
         return post;
     }
 
-    public static Post publish(String title, String body) {
-        return new Post(title, body);
-    }
-
     public String getTitle() {
         return title;
     }

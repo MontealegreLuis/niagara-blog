@@ -4,6 +4,9 @@
 package com.codeup.controllers;
 
 import com.codeup.blog.Post;
+import com.codeup.blog.PostInformation;
+import com.codeup.blog.UnknownPost;
+import com.codeup.blog.User;
 import com.codeup.services.PostService;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -30,17 +33,17 @@ public class PostsControllerTest {
     @Autowired
     private MockMvc mvc;
 
-
     @MockBean
     private PostService service;
 
     @Test
     public void it_shows_all_the_published_posts() throws Exception {
+        User author = new User();
         given(service.findAllPosts())
             .willReturn(Arrays.asList(
-                Post.publish("Intro to Spring Boot", "Intro text for Spring Boot"),
-                Post.publish("Intro to JUnit", "Intro text for JUnit"),
-                Post.publish("Intro to Mockito", "Intro text for Mockito")
+                Post.publish(new PostInformation("Intro to Spring Boot", "Intro text for Spring Boot"), author),
+                Post.publish(new PostInformation("Intro to JUnit", "Intro text for JUnit"), author),
+                Post.publish(new PostInformation("Intro to Mockito", "Intro text for Mockito"), author)
             ))
         ;
 
@@ -56,9 +59,10 @@ public class PostsControllerTest {
     public void it_finds_an_existing_vehicle() throws Exception {
         String title = "Testing in Spring Boot";
         String body = "Your first controller test";
+        User author = new User();
         int id = 1;
 
-        given(service.findOnePost(id)).willReturn(Post.publish(title, body));
+        given(service.findOnePost(id)).willReturn(Post.publish(new PostInformation(title, body), author));
 
         mvc.perform(get("/posts/" + id))
             .andExpect(status().isOk())
@@ -70,7 +74,7 @@ public class PostsControllerTest {
     @Test
     public void it_returns_a_404_status_code_if_the_post_cannot_be_found() throws Exception {
         long id = -1;
-        given(service.findOnePost(id)).willReturn(null);
+        given(service.findOnePost(id)).willThrow(UnknownPost.class);
 
         mvc.perform(get("/posts/" + id))
             .andExpect(status().isNotFound())
