@@ -61,40 +61,6 @@ public class PostsController {
         return "posts/show";
     }
 
-    @GetMapping("/posts/create")
-    public String viewCreatePostForm(Model viewModel) {
-        viewModel.addAttribute("postInformation", new PostInformation());
-        return "posts/create";
-    }
-
-    @PostMapping("/posts/create")
-    public String createPost(
-        @Valid PostInformation information,
-        Errors validation,
-        Model viewModel,
-        @RequestParam(name = "image_file") MultipartFile uploadedFile
-    ) throws IOException {
-        if (validation.hasErrors()) {
-            viewModel.addAttribute("errors", validation);
-            viewModel.addAttribute("postInformation", information);
-            return "posts/create";
-        }
-
-        User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Post post = Post.publish(information, author);
-
-        if (!uploadedFile.isEmpty()) {
-            String filename = uploadedFile.getOriginalFilename();
-            String destinationPath = Paths.get(uploadsFolder(), filename).toString();
-            uploadedFile.transferTo(new File(destinationPath));
-            post.setImage(filename);
-        }
-
-        service.save(post);
-
-        return "redirect:/posts";
-    }
-
     @GetMapping("/posts/{id}/edit")
     @PreAuthorize("@postOwnerExpression.isAuthor(principal, #id)")
     public String showEditPostForm(@PathVariable Long id, Model viewModel) {
