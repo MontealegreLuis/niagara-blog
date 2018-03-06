@@ -1,6 +1,3 @@
-/*
- * This source file is subject to the license that is bundled with this package in the file LICENSE.
- */
 package com.codeup.controllers;
 
 import com.codeup.models.User;
@@ -16,27 +13,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.validation.Valid;
 
 @Controller
-public class AuthenticationController {
-    private UsersRepository repository;
+public class SignUpController {
+    private UsersRepository users;
     private PasswordEncoder encoder;
 
-    public AuthenticationController(UsersRepository repository, PasswordEncoder encoder) {
-        this.repository = repository;
+    public SignUpController(UsersRepository users, PasswordEncoder encoder) {
+        this.users = users;
         this.encoder = encoder;
     }
 
-    @GetMapping("/login")
-    public String showLoginForm() {
-        return "users/login";
-    }
-
-    @GetMapping("/register")
+    @GetMapping("/sign-up")
     public String showRegisterForm(Model viewModel) {
         viewModel.addAttribute("user", new User());
-        return "users/register";
+        return "users/sign-up";
     }
 
-    @PostMapping("/users/create")
+    @PostMapping("/sign-up")
     public String registerUser(
         @Valid User user,
         Errors validation,
@@ -53,11 +45,11 @@ public class AuthenticationController {
         if (validation.hasErrors()) {
             viewModel.addAttribute("errors", validation);
             viewModel.addAttribute("user", user);
-            return "users/register";
+            return "users/sign-up";
         }
 
         user.encodePassword(encoder);
-        repository.save(user);
+        users.save(user);
 
         return "redirect:/login";
     }
