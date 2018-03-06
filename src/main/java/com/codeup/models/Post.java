@@ -3,6 +3,8 @@
  */
 package com.codeup.models;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.util.Assert;
 
@@ -10,8 +12,11 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+@Getter @Setter
 @Entity @Table(name="posts")
 public class Post implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id @GeneratedValue
     private long id;
 
@@ -28,7 +33,7 @@ public class Post implements Serializable {
     private String image;
 
     @ManyToOne
-    @JoinColumn (name = "user_id")  // define at the table level
+    @JoinColumn (name = "user_id")
     private User author;
 
     public Post() {
@@ -41,14 +46,6 @@ public class Post implements Serializable {
 
     public static Post publish(String title, String body) {
         return new Post(title, body);
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -75,10 +72,6 @@ public class Post implements Serializable {
 
     public void setAuthor(User author) {
         this.author = author;
-    }
-
-    public String getImage() {
-        return image;
     }
 
     public void setImage(String image) {
