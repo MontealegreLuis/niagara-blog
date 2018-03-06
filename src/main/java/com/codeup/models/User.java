@@ -1,4 +1,4 @@
-/**
+/*
  * This source file is subject to the license that is bundled with this package in the file LICENSE.
  */
 package com.codeup.models;
@@ -6,6 +6,7 @@ package com.codeup.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -63,6 +64,10 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void encodePassword(PasswordEncoder encoder) {
+        password = encoder.encode(password);
     }
 
     public String getEmail() {

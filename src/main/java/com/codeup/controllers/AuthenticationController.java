@@ -1,11 +1,10 @@
-/**
+/*
  * This source file is subject to the license that is bundled with this package in the file LICENSE.
  */
 package com.codeup.controllers;
 
 import com.codeup.models.User;
 import com.codeup.repositories.UsersRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +20,6 @@ public class AuthenticationController {
     private UsersRepository repository;
     private PasswordEncoder encoder;
 
-    @Autowired
     public AuthenticationController(UsersRepository repository, PasswordEncoder encoder) {
         this.repository = repository;
         this.encoder = encoder;
@@ -58,7 +56,7 @@ public class AuthenticationController {
             return "users/register";
         }
 
-        user.setPassword(encoder.encode(user.getPassword()));
+        user.encodePassword(encoder);
         repository.save(user);
 
         return "redirect:/login";
