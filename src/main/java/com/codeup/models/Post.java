@@ -5,15 +5,12 @@ package com.codeup.models;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.util.Assert;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Getter @Setter
-@Entity @Table(name="posts")
+@Entity @Table(name = "posts")
 public class Post implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -21,27 +18,30 @@ public class Post implements Serializable {
     private long id;
 
     @Column(nullable = false)
-    @NotBlank(message = "Title cannot be empty")
     private String title;
 
     @Column(length = 5000, nullable = false)
-    @NotBlank(message = "Posts cannot be empty")
-    @Size(min = 5, message = "Posts must have at least 5 characters")
     private String body;
 
-    @Column
     private String image;
 
     @ManyToOne
-    @JoinColumn (name = "user_id")
+    @JoinColumn(name = "user_id")
     private User author;
 
     public Post() {
     }
 
     private Post(String title, String body) {
-        setTitle(title);
-        setBody(body);
+        this.title = title;
+        this.body = body;
+    }
+
+    public static Post publish(PostInformation information, User author) {
+        Post post = new Post(information.getTitle(), information.getBody());
+        post.setAuthor(author);
+
+        return post;
     }
 
     public static Post publish(String title, String body) {
@@ -52,18 +52,8 @@ public class Post implements Serializable {
         return title;
     }
 
-    public void setTitle(String title) {
-        Assert.notNull(title, "Title cannot be empty");
-        this.title = title;
-    }
-
     public String getBody() {
         return body;
-    }
-
-    public void setBody(String body) {
-        Assert.notNull(body, "Posts cannot be empty");
-        this.body = body;
     }
 
     public User getAuthor() {

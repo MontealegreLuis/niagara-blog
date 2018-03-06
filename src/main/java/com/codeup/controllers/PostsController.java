@@ -2,6 +2,7 @@ package com.codeup.controllers;
 
 import com.codeup.exceptions.PostNotFound;
 import com.codeup.models.Post;
+import com.codeup.models.PostInformation;
 import com.codeup.models.User;
 import com.codeup.services.PostService;
 import org.apache.commons.io.FileUtils;
@@ -62,22 +63,25 @@ public class PostsController {
 
     @GetMapping("/posts/create")
     public String viewCreatePostForm(Model viewModel) {
-        viewModel.addAttribute("post", new Post());
+        viewModel.addAttribute("postInformation", new PostInformation());
         return "posts/create";
     }
 
     @PostMapping("/posts/create")
     public String createPost(
-        @Valid Post post,
+        @Valid PostInformation information,
         Errors validation,
         Model viewModel,
         @RequestParam(name = "image_file") MultipartFile uploadedFile
     ) throws IOException {
         if (validation.hasErrors()) {
             viewModel.addAttribute("errors", validation);
-            viewModel.addAttribute("post", post);
+            viewModel.addAttribute("postInformation", information);
             return "posts/create";
         }
+
+        User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Post post = Post.publish(information, author);
 
         if (!uploadedFile.isEmpty()) {
             String filename = uploadedFile.getOriginalFilename();
@@ -86,8 +90,6 @@ public class PostsController {
             post.setImage(filename);
         }
 
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        post.setAuthor(user);
         service.save(post);
 
         return "redirect:/posts";
@@ -96,17 +98,17 @@ public class PostsController {
     @GetMapping("/posts/{id}/edit")
     @PreAuthorize("@postOwnerExpression.isAuthor(principal, #id)")
     public String showEditPostForm(@PathVariable Long id, Model viewModel) {
-        viewModel.addAttribute("post", service.findOnePost(id));
+        viewModel.addAttribute("id", id);
+        viewModel.addAttribute("postInformation", service.findOnePost(id));
         return "posts/edit";
     }
 
     @PostMapping("/posts/{id}/edit")
     @PreAuthorize("@postOwnerExpression.isAuthor(principal, #post.id)")
-    public String updatePost(@Valid Post post, Model viewModel) {
+    public String updatePost(@Valid Post post) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setAuthor(user);
         service.update(post);
-        viewModel.addAttribute("post", post);
         return "redirect:/posts";
     }
 

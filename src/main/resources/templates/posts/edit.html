@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/common :: head(title='Edit your post')"/>
+<head th:replace="fragments/common :: head(title='Edit your post')"></head>
 <body>
-<nav th:replace="fragments/common :: navbar"/>
+<nav th:replace="fragments/common :: navbar"></nav>
 <main class="container">
-    <header class="page-header"><h1>Edit your post</h1></header>
-    <section th:replace="fragments/posts :: form(
-        action='/posts/' + ${post.id} + '/edit',
-        post=${post},
-        label='Update'
-    )"/>
+    <header class="page-header">
+        <h1>Edit your post</h1>
+    </header>
+    <form th:action="@{/posts/{id}/edit(id=${id})}" method="POST" th:object="${postInformation}" enctype="multipart/form-data">
+        <section th:replace="fragments/posts :: form(label='Update')"></section>
+    </form>
 </main>
-<span th:replace="fragments/common :: scripts"/>
+<span th:replace="fragments/common :: scripts"></span>
 </body>
 </html>

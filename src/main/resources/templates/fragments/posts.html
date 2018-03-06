@@ -5,32 +5,30 @@
     <title>Posts fragments</title>
 </head>
 <body>
-<section th:fragment="form(action, post, label)">
-    <form th:action="${action}" method="POST" th:object="${post}"  enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input id="title" class="form-control" autofocus="autofocus" th:field="*{title}" />
-            <div th:replace="fragments/common :: error(
-                condition=${#fields.hasErrors('title')},
-                type='danger',
-                messages = ${#fields.errors('__title__')}
-            )" />
-        </div>
-        <div class="form-group">
-            <label for="body">Body</label>
-            <textarea id="body" class="form-control" th:field="*{body}" />
-            <div th:replace="fragments/common :: error(
-                condition=${#fields.hasErrors('body')},
-                type='danger',
-                messages = ${#fields.errors('__body__')}
-            )" />
-        </div>
-        <div class="form-group">
-            <label for="image">Upload an image!</label>
-            <input id="image" name="image_file" type="file" />
-        </div>
-        <input class="btn btn-primary" type="submit" th:attr="value=${label}" />
-    </form>
-</section>
+<th:block th:fragment="form(label)">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input id="title" class="form-control" autofocus="autofocus" th:field="*{title}"/>
+        <div th:replace="fragments/common :: error(
+            condition=${#fields.hasErrors('title')},
+            type='danger',
+            messages = ${#fields.errors('__title__')}
+        )"></div>
+    </div>
+    <div class="form-group">
+        <label for="body">Body</label>
+        <textarea id="body" class="form-control" th:field="*{body}"></textarea>
+        <div th:replace="fragments/common :: error(
+            condition=${#fields.hasErrors('body')},
+            type='danger',
+            messages = ${#fields.errors('__body__')}
+        )"></div>
+    </div>
+    <div class="form-group">
+        <label for="image">Upload an image!</label>
+        <input id="image" name="image_file" type="file"/>
+    </div>
+    <input class="btn btn-primary" type="submit" th:attr="value=${label}"/>
+</th:block>
 </body>
 </html>

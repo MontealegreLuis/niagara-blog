@@ -65,6 +65,7 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+
 <!-- Error Messages -->
 <div
     th:fragment="error(condition, type, messages)"
@@ -76,10 +77,10 @@
         <span aria-hidden="true">&times;</span>
     </button>
     <ul>
-        <li th:each="message : ${messages}"
-            th:text="${message}" />
+        <li th:each="message : ${messages}" th:text="${message}"></li>
     </ul>
 </div>
+
 <!-- Javascript files -->
 <th:block th:fragment="scripts">
     <script
