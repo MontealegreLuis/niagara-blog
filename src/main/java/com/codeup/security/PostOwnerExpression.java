@@ -1,4 +1,4 @@
-/**
+/*
  * This source file is subject to the license that is bundled with this package in the file LICENSE.
  */
 package com.codeup.security;
@@ -20,7 +20,6 @@ public class PostOwnerExpression {
 
     public boolean isAuthor(User currentUser, Long postId) {
         Post post = posts.findOne(postId);
-        User author = post.getAuthor();
-        return author != null && author.getId() ==  currentUser.getId();
+        return post.isAuthoredBy(currentUser);
     }
 }

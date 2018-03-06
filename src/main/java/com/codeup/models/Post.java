@@ -77,4 +77,8 @@ public class Post implements Serializable {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public boolean isAuthoredBy(User user) {
+        return author.equals(user);
+    }
 }

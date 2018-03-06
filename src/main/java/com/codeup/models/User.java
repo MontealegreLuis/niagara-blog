@@ -17,6 +17,8 @@ import java.io.Serializable;
 @Getter @Setter
 @Entity @Table(name = "users")
 public class User implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id @GeneratedValue
     private int id;
 
@@ -59,5 +61,10 @@ public class User implements Serializable {
 
     public void encodePassword(PasswordEncoder encoder) {
         password = encoder.encode(password);
+    }
+
+    @Override
+    public boolean equals(Object anotherUser) {
+        return anotherUser != null && anotherUser instanceof User && ((User) anotherUser).id == id;
     }
 }
