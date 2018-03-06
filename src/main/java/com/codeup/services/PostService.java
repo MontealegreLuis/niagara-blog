@@ -3,9 +3,9 @@
  */
 package com.codeup.services;
 
-import com.codeup.exceptions.UnknownPost;
-import com.codeup.models.Post;
-import com.codeup.repositories.Posts;
+import com.codeup.blog.UnknownPost;
+import com.codeup.blog.Post;
+import com.codeup.blog.Posts;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;

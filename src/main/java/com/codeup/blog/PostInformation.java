@@ -1,4 +1,4 @@
-package com.codeup.models;
+package com.codeup.blog;
 
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotBlank;

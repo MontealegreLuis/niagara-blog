@@ -1,11 +1,11 @@
 /*
  * This source file is subject to the license that is bundled with this package in the file LICENSE.
  */
-package com.codeup.security;
+package com.codeup.blog;
 
-import com.codeup.models.Post;
-import com.codeup.models.User;
-import com.codeup.repositories.Posts;
+import com.codeup.blog.Post;
+import com.codeup.blog.User;
+import com.codeup.blog.Posts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

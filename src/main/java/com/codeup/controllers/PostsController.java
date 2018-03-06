@@ -1,7 +1,7 @@
 package com.codeup.controllers;
 
-import com.codeup.models.Post;
-import com.codeup.models.User;
+import com.codeup.blog.Post;
+import com.codeup.blog.User;
 import com.codeup.services.PostService;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;

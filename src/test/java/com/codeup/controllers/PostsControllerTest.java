@@ -3,7 +3,7 @@
  */
 package com.codeup.controllers;
 
-import com.codeup.models.Post;
+import com.codeup.blog.Post;
 import com.codeup.services.PostService;
 import org.hamcrest.Matchers;
 import org.junit.Test;

@@ -1,8 +1,8 @@
 package com.codeup.controllers;
 
-import com.codeup.models.Post;
-import com.codeup.models.PostInformation;
-import com.codeup.models.User;
+import com.codeup.blog.Post;
+import com.codeup.blog.PostInformation;
+import com.codeup.blog.User;
 import com.codeup.services.PostService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
