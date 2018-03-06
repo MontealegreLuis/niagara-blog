@@ -5,16 +5,16 @@ package com.codeup.security;
 
 import com.codeup.models.Post;
 import com.codeup.models.User;
-import com.codeup.repositories.PostsRepository;
+import com.codeup.repositories.Posts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PostOwnerExpression {
-    private PostsRepository posts;
+    private Posts posts;
 
     @Autowired
-    public PostOwnerExpression(PostsRepository posts) {
+    public PostOwnerExpression(Posts posts) {
         this.posts = posts;
     }
 

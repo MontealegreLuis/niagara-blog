@@ -1,7 +1,7 @@
 package com.codeup.controllers;
 
 import com.codeup.models.User;
-import com.codeup.repositories.UsersRepository;
+import com.codeup.repositories.Users;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +14,10 @@ import javax.validation.Valid;
 
 @Controller
 public class SignUpController {
-    private UsersRepository users;
+    private Users users;
     private PasswordEncoder encoder;
 
-    public SignUpController(UsersRepository users, PasswordEncoder encoder) {
+    public SignUpController(Users users, PasswordEncoder encoder) {
         this.users = users;
         this.encoder = encoder;
     }

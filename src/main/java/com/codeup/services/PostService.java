@@ -4,7 +4,7 @@
 package com.codeup.services;
 
 import com.codeup.models.Post;
-import com.codeup.repositories.PostsRepository;
+import com.codeup.repositories.Posts;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PostService {
-    private PostsRepository repository;
+    private Posts repository;
 
-    public PostService(PostsRepository repository) {
+    public PostService(Posts repository) {
         this.repository = repository;
     }
 
