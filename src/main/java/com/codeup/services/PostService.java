@@ -3,6 +3,7 @@
  */
 package com.codeup.services;
 
+import com.codeup.exceptions.UnknownPost;
 import com.codeup.models.Post;
 import com.codeup.repositories.Posts;
 import org.springframework.cache.annotation.CacheEvict;
@@ -21,7 +22,11 @@ public class PostService {
 
     @Cacheable(value = "single-post", key = "#id")
     public Post findOnePost(long id) {
-        return repository.findOne(id);
+        Post post = repository.findOne(id);
+
+        if (post == null) throw UnknownPost.with(id);
+
+        return post;
     }
 
     @Cacheable(value = "all-posts")

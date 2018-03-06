@@ -1,8 +1,6 @@
 package com.codeup.controllers;
 
-import com.codeup.exceptions.PostNotFound;
 import com.codeup.models.Post;
-import com.codeup.models.PostInformation;
 import com.codeup.models.User;
 import com.codeup.services.PostService;
 import org.apache.commons.io.FileUtils;
@@ -16,17 +14,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 
 @Controller
 public class PostsController {
@@ -50,13 +44,7 @@ public class PostsController {
 
     @GetMapping("/posts/{id}")
     public String viewSinglePost(@PathVariable long id, Model viewModel) {
-        Post post = service.findOnePost(id);
-
-        if (post == null) {
-            throw new PostNotFound(String.format("Post with ID %d cannot be found", id));
-        }
-
-        viewModel.addAttribute("post", post);
+        viewModel.addAttribute("post", service.findOnePost(id));
 
         return "posts/show";
     }
