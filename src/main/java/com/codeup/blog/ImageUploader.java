@@ -3,6 +3,8 @@
  */
 package com.codeup.blog;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +25,13 @@ public class ImageUploader {
         return filename;
     }
 
-    public String uploadsFolder() throws IOException {
+    public byte[] read(String imageFilename) throws IOException {
+        String imagePath = String.format("%s/%s", uploadsFolder(), imageFilename);
+
+        return IOUtils.toByteArray(FileUtils.openInputStream(new File(imagePath)));
+    }
+
+    private String uploadsFolder() throws IOException {
         return String.format("%s/%s", new File(".").getCanonicalPath(), uploadsFolder);
     }
 }
