@@ -1,14 +1,14 @@
 package com.codeup.controllers;
 
 import com.codeup.blog.User;
+import com.codeup.security.UserInformation;
 import com.codeup.security.Users;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -24,31 +24,15 @@ public class SignUpController {
 
     @GetMapping("/sign-up")
     public String showRegisterForm(Model viewModel) {
-        viewModel.addAttribute("user", new User());
+        viewModel.addAttribute("userInformation", new UserInformation());
         return "users/sign-up";
     }
 
     @PostMapping("/sign-up")
-    public String registerUser(
-        @Valid User user,
-        Errors validation,
-        Model viewModel,
-        @RequestParam(name = "password_confirm") String passwordConfirmation
-    ) {
-        if (!passwordConfirmation.equals(user.getPassword())) {
-            validation.rejectValue(
-                "password",
-                "user.password",
-                "Your passwords do not match"
-            );
-        }
-        if (validation.hasErrors()) {
-            viewModel.addAttribute("errors", validation);
-            viewModel.addAttribute("user", user);
-            return "users/sign-up";
-        }
+    public String registerUser(@Valid UserInformation userInformation, BindingResult validation) {
+        if (validation.hasErrors()) return "users/sign-up";
 
-        user.encodePassword(encoder);
+        User user = User.signUp(userInformation, encoder);
         users.save(user);
 
         return "redirect:/login";

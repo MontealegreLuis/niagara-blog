@@ -3,15 +3,13 @@
  */
 package com.codeup.blog;
 
+import com.codeup.security.UserInformation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Getter @Setter
@@ -23,19 +21,28 @@ public class User implements Serializable {
     private int id;
 
     @Column(nullable = false)
-    @NotBlank(message = "Enter a username")
     private String username;
 
     @Column(nullable = false)
-    @NotBlank(message = "Your password cannot be empty")
-    @Size(min = 8, message = "Your password should have at least 8 characters")
     @JsonIgnore
     private String password;
 
     @Column(nullable = false)
-    @Email(message = "Enter a valid email address")
-    @NotBlank(message = "Enter an email")
     private String email;
+
+    public static User signUp(UserInformation information, PasswordEncoder encoder) {
+        return new User(
+            information.getUsername(),
+            information.getEmail(),
+            encoder.encode(information.getPassword())
+        );
+    }
+
+    private User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 
     public User(User user) {
         id = user.id;
@@ -47,20 +54,12 @@ public class User implements Serializable {
     public User() {
     }
 
-    public int getId() {
-        return id;
-    }
-
     public String getUsername() {
         return username;
     }
 
     public String getPassword() {
         return password;
-    }
-
-    public void encodePassword(PasswordEncoder encoder) {
-        password = encoder.encode(password);
     }
 
     @Override
