@@ -23,7 +23,7 @@ public class ImageUploader {
         return filename;
     }
 
-    private String uploadsFolder() throws IOException {
+    public String uploadsFolder() throws IOException {
         return String.format("%s/%s", new File(".").getCanonicalPath(), uploadsFolder);
     }
 }
