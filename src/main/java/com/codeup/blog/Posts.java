@@ -3,7 +3,6 @@
  */
 package com.codeup.blog;
 
-import com.codeup.blog.Post;
 import org.springframework.data.repository.CrudRepository;
 
 public interface Posts extends CrudRepository<Post, Long> {

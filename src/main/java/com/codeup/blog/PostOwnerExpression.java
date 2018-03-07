@@ -3,9 +3,6 @@
  */
 package com.codeup.blog;
 
-import com.codeup.blog.Post;
-import com.codeup.blog.User;
-import com.codeup.blog.Posts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

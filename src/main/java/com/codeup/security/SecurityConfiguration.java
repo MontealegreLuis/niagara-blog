@@ -1,9 +1,8 @@
-/**
+/*
  * This source file is subject to the license that is bundled with this package in the file LICENSE.
  */
 package com.codeup.security;
 
-import com.codeup.security.UserDetailsLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
