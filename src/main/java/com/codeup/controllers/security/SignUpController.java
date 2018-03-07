@@ -1,4 +1,4 @@
-package com.codeup.controllers;
+package com.codeup.controllers.security;
 
 import com.codeup.blog.User;
 import com.codeup.security.UserInformation;

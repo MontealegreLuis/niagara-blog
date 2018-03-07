@@ -1,7 +1,7 @@
 /*
  * This source file is subject to the license that is bundled with this package in the file LICENSE.
  */
-package com.codeup.controllers;
+package com.codeup.controllers.blog;
 
 import com.codeup.blog.ImageUploader;
 import org.apache.commons.io.FileUtils;
