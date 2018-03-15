@@ -22,12 +22,16 @@ You'll also need to create an `application.properties` file.
 Execute the following command to create one:
 
 ```bash
-$ cp src/main/resources/application.dist.properties src/main/resources/application.properties
+$ cp src/main/resources/example.properties src/main/resources/application.properties
 ```
 
 Update your database credentials in this file, *if needed*.
+The `example.properties` file already has the settings for [Mailtrap][mailtrap].
+You'll only need to add your username and password.
+
 
 **NOTE.** This application uses [Redis][redis] for caching.
+It also uses [RabbitMQ][rabbitmq] to queue the email messages sent to new users.
 
 # Usage
 
@@ -50,3 +54,5 @@ java -jar target/blog-0.0.1-SNAPSHOT.jar
 [codebeat-badge]: https://codebeat.co/badges/cb353c07-f5f0-4862-a7f1-419008e1c40b
 [codebeat]: https://codebeat.co/projects/github-com-montealegreluis-spring-blog-master
 [redis]: https://redis.io/topics/quickstart
+[mailtrap]: https://mailtrap.io/
+[rabbitmq]: https://www.rabbitmq.com/download.html
