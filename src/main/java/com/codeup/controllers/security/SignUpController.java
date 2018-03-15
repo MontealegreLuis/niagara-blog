@@ -1,6 +1,7 @@
 package com.codeup.controllers.security;
 
 import com.codeup.blog.User;
+import com.codeup.events.Publisher;
 import com.codeup.security.UserInformation;
 import com.codeup.security.Users;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,10 +17,12 @@ import javax.validation.Valid;
 public class SignUpController {
     private Users users;
     private PasswordEncoder encoder;
+    private Publisher publisher;
 
-    public SignUpController(Users users, PasswordEncoder encoder) {
+    public SignUpController(Users users, PasswordEncoder encoder, Publisher publisher) {
         this.users = users;
         this.encoder = encoder;
+        this.publisher = publisher;
     }
 
     @GetMapping("/sign-up")
@@ -34,6 +37,7 @@ public class SignUpController {
 
         User user = User.signUp(userInformation, encoder);
         users.save(user);
+        publisher.publish(user.events());
 
         return "redirect:/login";
     }

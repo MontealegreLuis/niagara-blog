@@ -3,7 +3,10 @@
  */
 package com.codeup.blog;
 
+import com.codeup.events.CanRecordEvents;
+import com.codeup.events.Event;
 import com.codeup.security.UserInformation;
+import com.codeup.security.UserSignedUp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,10 +14,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Getter @Setter
 @Entity @Table(name = "users")
-public class User implements Serializable {
+public class User implements Serializable, CanRecordEvents {
     private static final long serialVersionUID = 1L;
 
     @Id @GeneratedValue
@@ -30,6 +36,9 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String email;
 
+    @Transient
+    private List<Event> events = new ArrayList<>();
+
     public static User signUp(UserInformation information, PasswordEncoder encoder) {
         return new User(
             information.getUsername(),
@@ -42,6 +51,7 @@ public class User implements Serializable {
         this.username = username;
         this.email = email;
         this.password = password;
+        recordThat(new UserSignedUp(username, email, new Date()));
     }
 
     public User(User user) {
@@ -65,5 +75,15 @@ public class User implements Serializable {
     @Override
     public boolean equals(Object anotherUser) {
         return anotherUser != null && anotherUser instanceof User && ((User) anotherUser).id == id;
+    }
+
+    @Override
+    public void recordThat(Event userSignedUp) {
+        events.add(userSignedUp);
+    }
+
+    @Override
+    public Iterable<Event> events() {
+        return events;
     }
 }
