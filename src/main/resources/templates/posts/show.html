@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/common :: head(title='View post details')"/>
+<head th:replace="fragments/common :: head(title='View post details')"></head>
 <body>
-<nav th:replace="fragments/common :: navbar"/>
+<nav th:replace="fragments/common :: navbar"></nav>
 <main class="container">
-    <h1 th:text="${post.title}" />
+    <h1 th:text="${post.title}"></h1>
     <img
         th:if="${post.image}"
         th:src="${'/posts/image/' + post.image}"
         class="img-responsive"
     />
-    <p th:text="${post.body}" />
+    <p th:text="${post.body}"></p>
 </main>
-<span th:replace="fragments/common :: scripts"/>
+<span th:replace="fragments/common :: scripts"></span>
 </body>
 </html>

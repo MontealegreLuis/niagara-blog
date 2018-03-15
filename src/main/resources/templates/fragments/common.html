@@ -6,7 +6,7 @@
 <!-- Links, meta tags and title -->
 <head th:fragment="head(title)">
     <meta charset="UTF-8" />
-    <title th:text="${title}"/>
+    <title th:text="${title}">Blog</title>
     <link
         rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -51,9 +51,9 @@
                 </li>
                 <li
                     sec:authorize="!isAuthenticated()"
-                    th:class="${#httpServletRequest.requestURI == '/register' ? 'active' : ''}"
+                    th:class="${#httpServletRequest.requestURI == '/sign-up' ? 'active' : ''}"
                 >
-                    <a href="/sign-up">Register</a>
+                    <a href="/sign-up">Sign up!</a>
                 </li>
                 <li
                     sec:authorize="!isAuthenticated()"
