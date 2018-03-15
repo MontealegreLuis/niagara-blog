@@ -3,12 +3,11 @@
  */
 package com.codeup.controllers.blog;
 
-import com.codeup.blog.ImageUploader;
 import com.codeup.blog.Post;
 import com.codeup.blog.PostInformation;
 import com.codeup.blog.User;
-import com.codeup.services.PostService;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.codeup.blog.actions.PublishPost;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,12 +21,10 @@ import java.io.IOException;
 
 @Controller
 public class PublishPostController {
-    private PostService service;
-    private ImageUploader uploader;
+    private PublishPost action;
 
-    public PublishPostController(PostService service, ImageUploader uploader) {
-        this.service = service;
-        this.uploader = uploader;
+    public PublishPostController(PublishPost action) {
+        this.action = action;
     }
 
     @GetMapping("/posts/create")
@@ -40,17 +37,14 @@ public class PublishPostController {
     public String createPost(
         @Valid PostInformation information,
         BindingResult validation,
-        @RequestParam(name = "image_file") MultipartFile uploadedImage
+        @RequestParam(name = "image_file") MultipartFile uploadedImage,
+        UsernamePasswordAuthenticationToken token
     ) throws IOException {
         if (validation.hasErrors()) return "posts/create";
 
-        User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Post post = Post.publish(information, author);
+        User author = (User) token.getPrincipal();
+        Post post = action.publish(information, author, uploadedImage);
 
-        if (!uploadedImage.isEmpty()) post.setImage(uploader.upload(uploadedImage));
-
-        service.save(post);
-
-        return "redirect:/posts";
+        return String.format("redirect:/posts/%d", post.getId());
     }
 }

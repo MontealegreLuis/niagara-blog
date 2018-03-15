@@ -4,12 +4,13 @@
 package com.codeup.blog;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Getter @Setter
+@Getter @Setter @NoArgsConstructor
 @Entity @Table(name = "posts")
 public class Post implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -28,9 +29,6 @@ public class Post implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User author;
-
-    public Post() {
-    }
 
     private Post(String title, String body) {
         this.title = title;
@@ -54,6 +52,10 @@ public class Post implements Serializable {
 
     public User getAuthor() {
         return author;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public void setAuthor(User author) {

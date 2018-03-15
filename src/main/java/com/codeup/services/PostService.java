@@ -35,12 +35,6 @@ public class PostService {
     }
 
     @CacheEvict(value = "all-posts", allEntries = true)
-    @Cacheable(value = "single-post", key = "#post.id")
-    public void save(Post post) {
-        repository.save(post);
-    }
-
-    @CacheEvict(value = "all-posts", allEntries = true)
     @CachePut(value = "single-post", key = "#post.id")
     public void update(Post post) {
         repository.save(post);
