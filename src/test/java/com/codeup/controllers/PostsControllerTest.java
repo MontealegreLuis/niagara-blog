@@ -73,7 +73,7 @@ public class PostsControllerTest {
 
     @Test
     public void it_returns_a_404_status_code_if_the_post_cannot_be_found() throws Exception {
-        long id = -1;
+        long id = 0;
         given(service.findOnePost(id)).willThrow(UnknownPost.class);
 
         mvc.perform(get("/posts/" + id))
