@@ -1,10 +1,10 @@
+/*
+ * This source file is subject to the license that is bundled with this package in the file LICENSE.
+ */
 package com.codeup.controllers.security;
 
-import com.codeup.blog.User;
-import com.codeup.infrastructure.events.Publisher;
+import com.codeup.blog.actions.SignUp;
 import com.codeup.security.UserInformation;
-import com.codeup.security.Users;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,14 +15,10 @@ import javax.validation.Valid;
 
 @Controller
 public class SignUpController {
-    private Users users;
-    private PasswordEncoder encoder;
-    private Publisher publisher;
+    private SignUp action;
 
-    public SignUpController(Users users, PasswordEncoder encoder, Publisher publisher) {
-        this.users = users;
-        this.encoder = encoder;
-        this.publisher = publisher;
+    public SignUpController(SignUp action) {
+        this.action = action;
     }
 
     @GetMapping("/sign-up")
@@ -35,9 +31,7 @@ public class SignUpController {
     public String registerUser(@Valid UserInformation userInformation, BindingResult validation) {
         if (validation.hasErrors()) return "users/sign-up";
 
-        User user = User.signUp(userInformation, encoder);
-        users.save(user);
-        publisher.publish(user.events());
+        action.signUpWith(userInformation);
 
         return "redirect:/login";
     }
