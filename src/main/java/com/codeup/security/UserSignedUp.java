@@ -3,7 +3,7 @@
  */
 package com.codeup.security;
 
-import com.codeup.events.Event;
+import com.codeup.infrastructure.events.Event;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 

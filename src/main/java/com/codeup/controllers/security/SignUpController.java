@@ -1,7 +1,7 @@
 package com.codeup.controllers.security;
 
 import com.codeup.blog.User;
-import com.codeup.events.Publisher;
+import com.codeup.infrastructure.events.Publisher;
 import com.codeup.security.UserInformation;
 import com.codeup.security.Users;
 import org.springframework.security.crypto.password.PasswordEncoder;

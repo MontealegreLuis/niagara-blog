@@ -3,8 +3,8 @@
  */
 package com.codeup.blog;
 
-import com.codeup.events.CanRecordEvents;
-import com.codeup.events.Event;
+import com.codeup.infrastructure.events.CanRecordEvents;
+import com.codeup.infrastructure.events.Event;
 import com.codeup.security.UserInformation;
 import com.codeup.security.UserSignedUp;
 import com.fasterxml.jackson.annotation.JsonIgnore;

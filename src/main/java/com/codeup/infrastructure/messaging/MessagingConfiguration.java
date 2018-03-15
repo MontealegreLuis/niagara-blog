@@ -1,7 +1,7 @@
 /*
  * This source file is subject to the license that is bundled with this package in the file LICENSE.
  */
-package com.codeup.messaging;
+package com.codeup.infrastructure.messaging;
 
 import com.codeup.security.ConfirmAccountEmail;
 import com.rabbitmq.jms.admin.RMQConnectionFactory;
