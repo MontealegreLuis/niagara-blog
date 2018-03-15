@@ -7,7 +7,7 @@ import com.codeup.blog.Post;
 import com.codeup.blog.PostInformation;
 import com.codeup.blog.User;
 import com.codeup.blog.actions.PublishPost;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,7 +38,7 @@ public class PublishPostController {
         @Valid PostInformation information,
         BindingResult validation,
         @RequestParam(name = "image_file") MultipartFile uploadedImage,
-        UsernamePasswordAuthenticationToken token
+        Authentication token
     ) throws IOException {
         if (validation.hasErrors()) return "posts/create";
 
