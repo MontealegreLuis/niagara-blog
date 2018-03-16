@@ -27,20 +27,20 @@ public class PublishPostController {
         this.action = action;
     }
 
-    @GetMapping("/posts/create")
+    @GetMapping("/posts/publish")
     public String viewCreatePostForm(Model viewModel) {
         viewModel.addAttribute("postInformation", new PostInformation());
-        return "posts/create";
+        return "posts/publish";
     }
 
-    @PostMapping("/posts/create")
+    @PostMapping("/posts/publish")
     public String createPost(
         @Valid PostInformation information,
         BindingResult validation,
         @RequestParam(name = "image_file") MultipartFile uploadedImage,
         Authentication token
     ) throws IOException {
-        if (validation.hasErrors()) return "posts/create";
+        if (validation.hasErrors()) return "posts/publish";
 
         User author = (User) token.getPrincipal();
         Post post = action.publish(information, author, uploadedImage);

@@ -38,9 +38,9 @@
                 </li>
                 <li
                     sec:authorize="isAuthenticated()"
-                    th:class="${#httpServletRequest.requestURI == '/posts/create' ? 'active' : ''}"
+                    th:class="${#httpServletRequest.requestURI == '/posts/publish' ? 'active' : ''}"
                 >
-                    <a href="/posts/create">Publish a Post!</a>
+                    <a href="/posts/publish">Publish a Post!</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

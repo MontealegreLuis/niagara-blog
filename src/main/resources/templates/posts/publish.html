@@ -7,7 +7,7 @@
     <header class="page-header">
         <h1>Publish a new post</h1>
     </header>
-    <form th:action="@{/posts/create}" method="POST" th:object="${postInformation}" enctype="multipart/form-data">
+    <form th:action="@{/posts/publish}" method="POST" th:object="${postInformation}" enctype="multipart/form-data">
         <section th:replace="fragments/posts :: form(label='Publish')"></section>
     </form>
 </main>
