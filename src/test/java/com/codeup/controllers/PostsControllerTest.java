@@ -7,6 +7,7 @@ import com.codeup.blog.Post;
 import com.codeup.blog.PostInformation;
 import com.codeup.blog.UnknownPost;
 import com.codeup.blog.User;
+import com.codeup.blog.actions.ReadPost;
 import com.codeup.services.PostService;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -36,6 +37,9 @@ public class PostsControllerTest {
     @MockBean
     private PostService service;
 
+    @MockBean
+    private ReadPost action;
+
     @Test
     public void it_shows_all_the_published_posts() throws Exception {
         User author = new User();
@@ -56,13 +60,13 @@ public class PostsControllerTest {
     }
 
     @Test
-    public void it_finds_an_existing_vehicle() throws Exception {
+    public void it_finds_a_published_post() throws Exception {
         String title = "Testing in Spring Boot";
         String body = "Your first controller test";
         User author = new User();
-        int id = 1;
+        long id = 1;
 
-        given(service.findOnePost(id)).willReturn(Post.publish(new PostInformation(title, body), author));
+        given(action.readPostWith(id)).willReturn(Post.publish(new PostInformation(title, body), author));
 
         mvc.perform(get("/posts/" + id))
             .andExpect(status().isOk())
@@ -74,7 +78,7 @@ public class PostsControllerTest {
     @Test
     public void it_returns_a_404_status_code_if_the_post_cannot_be_found() throws Exception {
         long id = 0;
-        given(service.findOnePost(id)).willThrow(UnknownPost.class);
+        given(action.readPostWith(id)).willThrow(UnknownPost.class);
 
         mvc.perform(get("/posts/" + id))
             .andExpect(status().isNotFound())
