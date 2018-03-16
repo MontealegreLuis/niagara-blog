@@ -28,13 +28,6 @@ public class PostsController {
         return "posts/index";
     }
 
-    @GetMapping("/posts/{id}")
-    public String viewSinglePost(@PathVariable long id, Model viewModel) {
-        viewModel.addAttribute("post", service.findOnePost(id));
-
-        return "posts/show";
-    }
-
     @GetMapping("/posts/{id}/edit")
     @PreAuthorize("@postOwnerExpression.isAuthor(principal, #id)")
     public String showEditPostForm(@PathVariable Long id, Model viewModel) {
