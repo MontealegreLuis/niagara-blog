@@ -34,25 +34,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .formLogin()
+            .authorizeRequests()
+                .antMatchers(
+                        "/",
+                        "/styles/**",
+                        "/posts",
+                        "/posts/image/**",
+                        "/sign-up"
+                ).permitAll()
+                .regexMatchers("/posts/(\\d)+").permitAll()
+                .anyRequest().authenticated()
+            .and()
+                .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/posts")
                 .permitAll()
             .and()
                 .logout()
                 .logoutSuccessUrl("/login?logout")
-            .and()
-                .authorizeRequests()
-                .antMatchers("/", "/posts", "/posts/image/**", "/logout", "/sign-up")
                 .permitAll()
-            .and()
-                .authorizeRequests()
-                .regexMatchers("/posts/(\\d)+")
-                .permitAll()
-            .and()
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated()
         ;
     }
 
