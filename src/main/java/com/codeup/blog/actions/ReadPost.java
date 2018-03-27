@@ -19,7 +19,7 @@ public class ReadPost {
 
     @Cacheable(value = "single-post", key = "#id")
     public Post readPostWith(Long id) {
-        Post post = posts.findOne(id);
+        Post post = posts.findById(id);
 
         if (post == null) throw UnknownPost.with(id);
 

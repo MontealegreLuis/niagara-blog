@@ -22,7 +22,7 @@ public class PostService {
 
     @Cacheable(value = "single-post", key = "#id")
     public Post findOnePost(long id) {
-        Post post = repository.findOne(id);
+        Post post = repository.findById(id);
 
         if (post == null) throw UnknownPost.with(id);
 

@@ -1,10 +1,8 @@
 package com.codeup.controllers.blog;
 
 import com.codeup.blog.Post;
-import com.codeup.blog.User;
 import com.codeup.services.PostService;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,8 +37,6 @@ public class PostsController {
     @PostMapping("/posts/{id}/edit")
     @PreAuthorize("@postOwnerExpression.isAuthor(principal, #post.id)")
     public String updatePost(@Valid Post post) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        post.setAuthor(user);
         service.update(post);
         return "redirect:/posts";
     }

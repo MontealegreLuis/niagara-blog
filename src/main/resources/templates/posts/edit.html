@@ -8,6 +8,7 @@
         <h1>Edit your post</h1>
     </header>
     <form th:action="@{/posts/{id}/edit(id=${id})}" method="POST" th:object="${postInformation}" enctype="multipart/form-data">
+        <input type="hidden" th:field="*{author.id}" />
         <section th:replace="fragments/posts :: form(label='Update')"></section>
     </form>
 </main>
