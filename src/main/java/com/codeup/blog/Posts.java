@@ -3,10 +3,10 @@
  */
 package com.codeup.blog;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 
-public interface Posts extends CrudRepository<Post, Long> {
+public interface Posts extends JpaRepository<Post, Long> {
     @Query("from Post p join p.author where p.id = ?1")
     Post findById(Long id);
 }
