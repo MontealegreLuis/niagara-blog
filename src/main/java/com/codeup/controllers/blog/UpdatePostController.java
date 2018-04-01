@@ -13,8 +13,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Controller
 public class UpdatePostController {
@@ -39,11 +42,12 @@ public class UpdatePostController {
     public String updatePost(
         @Valid PostInformation postInformation,
         BindingResult validation,
-        @PathVariable Long id
-    ) {
+        @PathVariable Long id,
+        @RequestParam(name = "image_file") MultipartFile image
+    ) throws IOException {
         if (validation.hasErrors()) return "posts/edit";
 
-        updatePost.update(id, postInformation);
+        updatePost.update(id, postInformation, image);
 
         return "redirect:/posts";
     }
