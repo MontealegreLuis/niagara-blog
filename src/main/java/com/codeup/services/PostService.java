@@ -3,11 +3,9 @@
  */
 package com.codeup.services;
 
-import com.codeup.blog.UnknownPost;
 import com.codeup.blog.Post;
 import com.codeup.blog.Posts;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
@@ -20,24 +18,9 @@ public class PostService {
         this.repository = repository;
     }
 
-    @Cacheable(value = "single-post", key = "#id")
-    public Post findOnePost(long id) {
-        Post post = repository.findById(id);
-
-        if (post == null) throw UnknownPost.with(id);
-
-        return post;
-    }
-
     @Cacheable(value = "all-posts")
     public Iterable<Post> findAllPosts() {
         return repository.findAll();
-    }
-
-    @CacheEvict(value = "all-posts", allEntries = true)
-    @CachePut(value = "single-post", key = "#post.id")
-    public void update(Post post) {
-        repository.save(post);
     }
 
     @Caching(evict = {

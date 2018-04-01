@@ -69,4 +69,9 @@ public class Post implements Serializable {
     public boolean isAuthoredBy(User user) {
         return author.equals(user);
     }
+
+    public void update(PostInformation information) {
+        title = information.getTitle();
+        body = information.getBody();
+    }
 }

@@ -1,6 +1,5 @@
 package com.codeup.controllers.blog;
 
-import com.codeup.blog.Post;
 import com.codeup.services.PostService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -8,8 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import javax.validation.Valid;
 
 @Controller
 public class PostsController {
@@ -24,21 +21,6 @@ public class PostsController {
         viewModel.addAttribute("posts", service.findAllPosts());
 
         return "posts/index";
-    }
-
-    @GetMapping("/posts/{id}/edit")
-    @PreAuthorize("@postOwnerExpression.isAuthor(principal, #id)")
-    public String showEditPostForm(@PathVariable Long id, Model viewModel) {
-        viewModel.addAttribute("id", id);
-        viewModel.addAttribute("postInformation", service.findOnePost(id));
-        return "posts/edit";
-    }
-
-    @PostMapping("/posts/{id}/edit")
-    @PreAuthorize("@postOwnerExpression.isAuthor(principal, #post.id)")
-    public String updatePost(@Valid Post post) {
-        service.update(post);
-        return "redirect:/posts";
     }
 
     @PostMapping("/posts/{id}/delete")
