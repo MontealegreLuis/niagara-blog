@@ -66,6 +66,16 @@
     </div><!-- /.container-fluid -->
 </nav>
 
+<!-- Flash messages -->
+<section class="container" th:fragment="message" th:if="${message != null}">
+    <div th:class="${'alert alert-' + message.type + ' alert-dismissible'}" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong th:text="${message.content}">Message</strong>
+    </div>
+</section>
+
 <!-- Error Messages -->
 <div
     th:fragment="error(condition, type, messages)"
