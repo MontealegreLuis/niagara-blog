@@ -3,10 +3,10 @@
  */
 package com.codeup.infrastructure.events;
 
-import java.util.Date;
+public interface EventSubscriber {
+    boolean isSubscribedTo(String eventName);
 
-public interface Event {
-    String getName();
+    Event parse(String message);
 
-    Date getOccurredOn();
+    void handle(Event event);
 }

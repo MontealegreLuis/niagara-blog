@@ -3,6 +3,8 @@
  */
 package com.codeup.security;
 
+import com.codeup.infrastructure.events.Event;
+import com.codeup.infrastructure.events.EventSubscriber;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class ConfirmAccountEmail {
+public class ConfirmAccountEmail implements EventSubscriber {
     private static final Log log = LogFactory.getLog(ConfirmAccountEmail.class);
 
     private JavaMailSender sender;
@@ -22,15 +24,25 @@ public class ConfirmAccountEmail {
         this.sender = sender;
     }
 
-    public void receive(String event) throws IOException {
-        sendEmail(parse(event));
-
-        log.info("Received the following message " + event);
+    @Override
+    public boolean isSubscribedTo(String eventName) {
+        return "UserSignedUp".equals(eventName);
     }
 
-    private UserSignedUp parse(String event) throws IOException {
+    @Override
+    public UserSignedUp parse(String event) {
+        log.info("Processing event: " + event);
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(event, UserSignedUp.class);
+        try {
+            return mapper.readValue(event, UserSignedUp.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void handle(Event event) {
+        sendEmail((UserSignedUp) event);
     }
 
     private void sendEmail(UserSignedUp event) {
@@ -40,5 +52,4 @@ public class ConfirmAccountEmail {
         message.setText("You can now start publishing posts");
         sender.send(message);
     }
-
 }

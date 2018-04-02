@@ -11,6 +11,7 @@ import java.util.Date;
 
 @Setter @NoArgsConstructor
 public class UserSignedUp implements Event {
+    private String name = "UserSignedUp";
     private Date occurredOn;
     private String username;
     private String email;
@@ -22,7 +23,12 @@ public class UserSignedUp implements Event {
     }
 
     @Override
-    public Date occurredOn() {
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public Date getOccurredOn() {
         return occurredOn;
     }
 

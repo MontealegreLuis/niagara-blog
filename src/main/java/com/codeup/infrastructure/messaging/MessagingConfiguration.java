@@ -18,10 +18,10 @@ public class MessagingConfiguration {
     @Value("${blog.messaging.topic}")
     private String topic;
 
-    private ConfirmAccountEmail notification;
+    private MessagesListener listener = new MessagesListener();
 
     public MessagingConfiguration(ConfirmAccountEmail notification) {
-        this.notification = notification;
+        listener.attach(notification);
     }
 
     @Bean
@@ -37,7 +37,7 @@ public class MessagingConfiguration {
         jmsListener.setDestinationName(topic);
         jmsListener.setPubSubDomain(false);
 
-        MessageListenerAdapter adapter = new MessageListenerAdapter(notification);
+        MessageListenerAdapter adapter = new MessageListenerAdapter(listener);
         adapter.setDefaultListenerMethod("receive");
 
         jmsListener.setMessageListener(adapter);
