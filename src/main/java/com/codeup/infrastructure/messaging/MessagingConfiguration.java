@@ -22,10 +22,10 @@ public class MessagingConfiguration {
     private MessagesListener listener = new MessagesListener();
 
     public MessagingConfiguration(
-        ConfirmAccountEmail notification,
+        ConfirmAccountEmail confirmAccountEmail,
         ResizeImage resizeImage
     ) {
-        listener.attach(notification);
+        listener.attach(confirmAccountEmail);
         listener.attach(resizeImage);
     }
 

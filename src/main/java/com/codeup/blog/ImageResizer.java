@@ -15,7 +15,7 @@ import java.io.IOException;
 public class ImageResizer {
     private static final int MAX_HEIGHT = 500;
 
-    @Value("${uploads.folder}")
+    @Value("${blog.uploads.folder}")
     private String imagesFolder;
 
     public void resize(String imageFilename) throws IOException, IM4JavaException, InterruptedException {

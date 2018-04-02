@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 
 @Service
 public class ImageUploader {
-    @Value("${uploads.folder}")
+    @Value("${blog.uploads.folder}")
     private String uploadsFolder;
 
     public String upload(MultipartFile image) throws IOException {

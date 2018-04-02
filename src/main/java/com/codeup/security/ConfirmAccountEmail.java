@@ -30,11 +30,11 @@ public class ConfirmAccountEmail implements EventSubscriber {
     }
 
     @Override
-    public UserSignedUp parse(String event) {
-        log.info("Processing event: " + event);
+    public UserSignedUp parse(String message) {
+        log.info("Processing message: " + message);
         ObjectMapper mapper = new ObjectMapper();
         try {
-            return mapper.readValue(event, UserSignedUp.class);
+            return mapper.readValue(message, UserSignedUp.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -25,7 +25,7 @@ Execute the following command to create one:
 $ cp src/main/resources/example.properties src/main/resources/application.properties
 ```
 
-Update your database credentials in this file, *if needed*.
+Add your database credentials to `application.properties`.
 The `example.properties` file already has the settings for [Mailtrap][mailtrap].
 You'll only need to add your username and password.
 
