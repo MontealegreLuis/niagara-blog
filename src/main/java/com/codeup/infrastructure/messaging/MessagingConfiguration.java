@@ -3,6 +3,7 @@
  */
 package com.codeup.infrastructure.messaging;
 
+import com.codeup.blog.ResizeImage;
 import com.codeup.security.ConfirmAccountEmail;
 import com.rabbitmq.jms.admin.RMQConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,8 +21,12 @@ public class MessagingConfiguration {
 
     private MessagesListener listener = new MessagesListener();
 
-    public MessagingConfiguration(ConfirmAccountEmail notification) {
+    public MessagingConfiguration(
+        ConfirmAccountEmail notification,
+        ResizeImage resizeImage
+    ) {
         listener.attach(notification);
+        listener.attach(resizeImage);
     }
 
     @Bean

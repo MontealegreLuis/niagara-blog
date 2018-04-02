@@ -3,16 +3,21 @@
  */
 package com.codeup.blog;
 
+import com.codeup.infrastructure.events.CanRecordEvents;
+import com.codeup.infrastructure.events.Event;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Getter @Setter @NoArgsConstructor
 @Entity @Table(name = "posts")
-public class Post implements Serializable {
+public class Post implements Serializable, CanRecordEvents {
     private static final long serialVersionUID = 1L;
 
     @Id @GeneratedValue
@@ -29,6 +34,9 @@ public class Post implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User author;
+
+    @Transient
+    private List<Event> events = new ArrayList<>();
 
     private Post(String title, String body) {
         this.title = title;
@@ -64,6 +72,7 @@ public class Post implements Serializable {
 
     public void setImage(String image) {
         this.image = image;
+        recordThat(new ImageWasUploaded(image, new Date()));
     }
 
     public boolean isAuthoredBy(User user) {
@@ -73,5 +82,15 @@ public class Post implements Serializable {
     public void update(PostInformation information) {
         title = information.getTitle();
         body = information.getBody();
+    }
+
+    @Override
+    public void recordThat(Event imageWasUploaded) {
+        events.add(imageWasUploaded);
+    }
+
+    @Override
+    public Iterable<Event> events() {
+        return events;
     }
 }
