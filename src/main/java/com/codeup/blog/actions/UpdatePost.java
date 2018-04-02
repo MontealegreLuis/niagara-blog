@@ -26,7 +26,7 @@ public class UpdatePost {
 
     @CacheEvict(value = "all-posts", allEntries = true)
     @CachePut(value = "single-post", key = "#id")
-    public void update(
+    public Post update(
         Long id,
         PostInformation postInformation,
         MultipartFile image
@@ -38,7 +38,10 @@ public class UpdatePost {
         if (!image.isEmpty()) post.setImage(uploader.upload(image));
 
         post.update(postInformation);
-        publisher.publish(post.events());
         posts.save(post);
+
+        publisher.publish(post.events());
+
+        return post;
     }
 }

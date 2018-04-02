@@ -3,6 +3,7 @@
  */
 package com.codeup.controllers.blog;
 
+import com.codeup.blog.Post;
 import com.codeup.blog.PostInformation;
 import com.codeup.blog.actions.ReadPost;
 import com.codeup.blog.actions.UpdatePost;
@@ -50,9 +51,9 @@ public class UpdatePostController {
     ) throws IOException {
         if (validation.hasErrors()) return "posts/edit";
 
-        updatePost.update(id, postInformation, image);
+        Post post = updatePost.update(id, postInformation, image);
 
         redirect.addFlashAttribute("message", FlashMessage.success("Your post has been updated!"));
-        return "redirect:/posts";
+        return String.format("redirect:/posts/%d", post.getId());
     }
 }
