@@ -49,7 +49,6 @@ public class PublishPostController {
         Post post = action.publish(information, author, uploadedImage);
 
         redirect.addFlashAttribute("message", FlashMessage.success("Your post has been published!"));
-
         return String.format("redirect:/posts/%d", post.getId());
     }
 }

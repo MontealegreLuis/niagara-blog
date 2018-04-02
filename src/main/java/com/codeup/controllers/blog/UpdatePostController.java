@@ -6,6 +6,7 @@ package com.codeup.controllers.blog;
 import com.codeup.blog.PostInformation;
 import com.codeup.blog.actions.ReadPost;
 import com.codeup.blog.actions.UpdatePost;
+import com.codeup.infrastructure.web.FlashMessage;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -43,12 +45,14 @@ public class UpdatePostController {
         @Valid PostInformation postInformation,
         BindingResult validation,
         @PathVariable Long id,
-        @RequestParam(name = "image_file") MultipartFile image
+        @RequestParam(name = "image_file") MultipartFile image,
+        RedirectAttributes redirect
     ) throws IOException {
         if (validation.hasErrors()) return "posts/edit";
 
         updatePost.update(id, postInformation, image);
 
+        redirect.addFlashAttribute("message", FlashMessage.success("Your post has been updated!"));
         return "redirect:/posts";
     }
 }

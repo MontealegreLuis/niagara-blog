@@ -4,6 +4,7 @@
 package com.codeup.blog.actions;
 
 import com.codeup.blog.*;
+import com.codeup.infrastructure.events.Publisher;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,12 @@ import java.io.IOException;
 public class UpdatePost {
     private Posts posts;
     private ImageUploader uploader;
+    private Publisher publisher;
 
-    public UpdatePost(Posts posts, ImageUploader uploader) {
+    public UpdatePost(Posts posts, ImageUploader uploader, Publisher publisher) {
         this.posts = posts;
         this.uploader = uploader;
+        this.publisher = publisher;
     }
 
     @CacheEvict(value = "all-posts", allEntries = true)
@@ -35,6 +38,7 @@ public class UpdatePost {
         if (!image.isEmpty()) post.setImage(uploader.upload(image));
 
         post.update(postInformation);
+        publisher.publish(post.events());
         posts.save(post);
     }
 }

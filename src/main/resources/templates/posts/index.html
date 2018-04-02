@@ -3,18 +3,19 @@
     xmlns:th="http://www.thymeleaf.org"
     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
 >
-<head th:replace="fragments/common :: head(title='View all posts')"/>
+<head th:replace="fragments/common :: head(title='View all posts')"></head>
 <body>
-    <nav th:replace="fragments/common :: navbar"/>
+    <nav th:replace="fragments/common :: navbar"></nav>
+    <section th:replace="fragments/common :: message"></section>
     <main class="container">
         <header class="page-header"><h1>All posts</h1></header>
         <section class="col-md-6" th:each="post: ${posts}">
             <article class="panel panel-default">
                 <div class="panel-heading">
-                    <span class="lead" th:text="${post.title}" />
+                    <span class="lead" th:text="${post.title}"></span>
                 </div>
                 <div class="panel-body">
-                    <p th:text="${post.body}"/>
+                    <p th:text="${post.body}"></p>
                 </div>
                 <div class="panel-footer">
                     <a th:href="${'/posts/' + post.id }" class="btn btn-success">
@@ -40,6 +41,6 @@
             </article>
         </section>
     </main>
-    <span th:replace="fragments/common :: scripts"/>
+    <span th:replace="fragments/common :: scripts"></span>
 </body>
 </html>
