@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/common :: head(title='View post details')"></head>
+<head th:replace="fragments/common :: head(title=${post.title})"></head>
 <body>
 <nav th:replace="fragments/common :: navbar"></nav>
 <section th:replace="fragments/common :: message"></section>

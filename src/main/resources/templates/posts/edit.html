@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/common :: head(title='Edit your post')"></head>
+<head th:replace="fragments/common :: head(title=${'Edit: ' + postInformation.title})"></head>
 <body>
 <nav th:replace="fragments/common :: navbar"></nav>
 <main class="container">
