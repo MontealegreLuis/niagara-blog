@@ -58,6 +58,14 @@ public class Post implements Serializable, CanRecordEvents {
         return body;
     }
 
+    public boolean hasImage() {
+        return image != null;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
     public User getAuthor() {
         return author;
     }

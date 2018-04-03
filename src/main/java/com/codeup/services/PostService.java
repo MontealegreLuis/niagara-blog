@@ -22,12 +22,4 @@ public class PostService {
     public Iterable<Post> findAllPosts() {
         return repository.findAll();
     }
-
-    @Caching(evict = {
-        @CacheEvict(value = "single-post", key = "#id"),
-        @CacheEvict(value = "all-posts", allEntries = true)
-    })
-    public void deletePostWith(Long id) {
-        repository.delete(id);
-    }
 }
