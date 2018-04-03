@@ -1,21 +1,21 @@
 package com.codeup.controllers.blog;
 
-import com.codeup.services.PostService;
+import com.codeup.blog.actions.ViewAllPosts;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class PostsController {
-    private PostService service;
+public class ViewAllPostsController {
+    private ViewAllPosts action;
 
-    public PostsController(PostService service) {
-        this.service = service;
+    public ViewAllPostsController(ViewAllPosts action) {
+        this.action = action;
     }
 
     @GetMapping({"/", "/posts"})
     public String viewAllPosts(Model viewModel){
-        viewModel.addAttribute("posts", service.findAllPosts());
+        viewModel.addAttribute("posts", action.viewAllPosts());
 
         return "posts/index";
     }

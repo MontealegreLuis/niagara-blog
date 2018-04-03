@@ -8,7 +8,7 @@ import com.codeup.blog.PostInformation;
 import com.codeup.blog.UnknownPost;
 import com.codeup.blog.User;
 import com.codeup.blog.actions.ReadPost;
-import com.codeup.services.PostService;
+import com.codeup.blog.actions.ViewAllPosts;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,12 +30,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase
-public class PostsControllerTest {
+public class ViewAllPostsControllerTest {
     @Autowired
     private MockMvc mvc;
 
     @MockBean
-    private PostService service;
+    private ViewAllPosts service;
 
     @MockBean
     private ReadPost action;
@@ -43,7 +43,7 @@ public class PostsControllerTest {
     @Test
     public void it_shows_all_the_published_posts() throws Exception {
         User author = new User();
-        given(service.findAllPosts())
+        given(service.viewAllPosts())
             .willReturn(Arrays.asList(
                 Post.publish(new PostInformation("Intro to Spring Boot", "Intro text for Spring Boot"), author),
                 Post.publish(new PostInformation("Intro to JUnit", "Intro text for JUnit"), author),
